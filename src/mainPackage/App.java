@@ -22,10 +22,13 @@ public class App {
         
         // mainpanel
         arrayOfPanels[0] = new MyPanel(0,0,700,550,mainPanelColor, true);
-        // sidepanel should be scrollable since it should be able to receive transactions out of bounds. Should also be split in two!
+        
+        // sidepanel should be scrollable since it should be able to receive transactions out of bounds.
         arrayOfPanels[1] = new MyPanel(arrayOfPanels[0].getWidth(), 0, frame.getWidth() - arrayOfPanels[0].getWidth(), 550, sidePanelColor, true);
-
+        
+        // sidebottompanel
         arrayOfPanels[2] = new MyPanel(arrayOfPanels[1].getX(), arrayOfPanels[1].getHeight(), arrayOfPanels[1].getWidth(), frame.getHeight() - arrayOfPanels[1].getHeight(), bottomPanelColor, true);
+        
         // bottompanel
         arrayOfPanels[3] = new MyPanel(0, arrayOfPanels[0].getHeight(), frame.getWidth() - arrayOfPanels[1].getWidth(), frame.getHeight() - arrayOfPanels[0].getHeight(), bottomPanelColor, true);
 
