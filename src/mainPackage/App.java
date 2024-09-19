@@ -1,9 +1,12 @@
 package mainPackage;
 import java.text.NumberFormat;
 
+import javax.swing.ButtonGroup;
+
 import GUIs.MyFrame;
 import GUIs.MyPanel;
 import classes.Product;
+import classes.Table;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -22,10 +25,13 @@ public class App {
         
         // mainpanel
         arrayOfPanels[0] = new MyPanel(0,0,700,550,mainPanelColor, true);
-        // sidepanel should be scrollable since it should be able to receive transactions out of bounds. Should also be split in two!
+        
+        // sidepanel should be scrollable since it should be able to receive transactions out of bounds.
         arrayOfPanels[1] = new MyPanel(arrayOfPanels[0].getWidth(), 0, frame.getWidth() - arrayOfPanels[0].getWidth(), 550, sidePanelColor, true);
-
+        
+        // sidebottompanel
         arrayOfPanels[2] = new MyPanel(arrayOfPanels[1].getX(), arrayOfPanels[1].getHeight(), arrayOfPanels[1].getWidth(), frame.getHeight() - arrayOfPanels[1].getHeight(), bottomPanelColor, true);
+        
         // bottompanel
         arrayOfPanels[3] = new MyPanel(0, arrayOfPanels[0].getHeight(), frame.getWidth() - arrayOfPanels[1].getWidth(), frame.getHeight() - arrayOfPanels[0].getHeight(), bottomPanelColor, true);
 
@@ -34,9 +40,17 @@ public class App {
             frame.add(panel);
         }
 
-        for (Product food : mainMenu) {
-            System.out.println(food.getName() + " " + NumberFormat.getCurrencyInstance().format(food.getPrice()));
+        // create buttonGroup for radiobuttons in Mainpanel
+        ButtonGroup tableButtonGroup = new ButtonGroup();
+        Table[] listOfTables = new Table[4];
+
+        for (int i = 0; i < listOfTables.length; i++) {
+            listOfTables[i] = new Table(false, i + 1, arrayOfPanels[0]);
+            tableButtonGroup.add(listOfTables[i]);
         }
 
+        for (Table table : listOfTables) {
+            table.drawTable();
+        }
     }
 }
