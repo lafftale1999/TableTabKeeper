@@ -1,9 +1,12 @@
 package mainPackage;
 import java.text.NumberFormat;
 
+import javax.swing.ButtonGroup;
+
 import GUIs.MyFrame;
 import GUIs.MyPanel;
 import classes.Product;
+import classes.Table;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -37,9 +40,17 @@ public class App {
             frame.add(panel);
         }
 
-        for (Product food : mainMenu) {
-            System.out.println(food.getName() + " " + NumberFormat.getCurrencyInstance().format(food.getPrice()));
+        // create buttonGroup for radiobuttons in Mainpanel
+        ButtonGroup tableButtonGroup = new ButtonGroup();
+        Table[] listOfTables = new Table[4];
+
+        for (int i = 0; i < listOfTables.length; i++) {
+            listOfTables[i] = new Table(false, i + 1, arrayOfPanels[0]);
+            tableButtonGroup.add(listOfTables[i]);
         }
 
+        for (Table table : listOfTables) {
+            table.drawTable();
+        }
     }
 }
