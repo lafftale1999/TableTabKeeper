@@ -1,0 +1,20 @@
+package GUIs;
+import java.awt.Color;
+
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
+import javax.swing.border.Border;
+
+public class MyPanel extends JPanel{
+
+    public MyPanel(int xPosition, int yPosition, int width, int height, int[] colorRGB, boolean hasBorder){
+        this.setBounds(xPosition,yPosition,width,height);
+        this.setBackground(new Color(colorRGB[0], colorRGB[1], colorRGB[2]));
+        this.setLayout(null);
+
+        if (hasBorder == true){
+            Border border = BorderFactory.createLineBorder(Color.DARK_GRAY, 1);
+            this.setBorder(border);
+        }
+    }
+}
