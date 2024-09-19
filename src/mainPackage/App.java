@@ -40,17 +40,13 @@ public class App {
             frame.add(panel);
         }
 
-        // create buttonGroup for radiobuttons in Mainpanel
-        ButtonGroup tableButtonGroup = new ButtonGroup();
-        Table[] listOfTables = new Table[4];
-
-        for (int i = 0; i < listOfTables.length; i++) {
-            listOfTables[i] = new Table(false, i + 1, arrayOfPanels[0]);
-            tableButtonGroup.add(listOfTables[i]);
+        // create tables and draw tables
+        for (int i = 0; i < Table.listOfTables.length; i++) {
+            Table.listOfTables[i] = new Table(false, i + 1, arrayOfPanels[0]);
         }
 
-        for (Table table : listOfTables) {
-            table.drawTable();
-        }
+        // create a buttonGroup so you cant select several tables at once
+        ButtonGroup tableButtonGroup = Table.createButtonGroup(Table.listOfTables);
+
     }
 }
