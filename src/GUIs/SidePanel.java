@@ -2,7 +2,6 @@ package GUIs;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
@@ -16,7 +15,6 @@ import classes.Table;
 public class SidePanel extends JPanel{
 
     private ArrayList<JPanel> listOfPanels = new ArrayList<JPanel>();
-    private TablePanel dependingPanel;
 
     public SidePanel(int xPosition, int yPosition, int width, int height, int[] colorRGB, boolean hasBorder){
         this.setBounds(xPosition,yPosition,width,height);

@@ -20,7 +20,6 @@ public class Table extends JRadioButton implements ActionListener{
     private int tableId;
     private OpenTab activeTab;
     private GUIs.TablePanel tablePanel;
-    private SidePanel sidePanel;
 
     // -------------- CONSTRUCTOR --------------
     public Table(boolean hasTab, int tableId, /* OpenTab activeTab, */ TablePanel tablePanel, SidePanel sidePanel){
