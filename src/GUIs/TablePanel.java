@@ -24,6 +24,8 @@ public class TablePanel extends JPanel{
             Border border = BorderFactory.createLineBorder(Color.DARK_GRAY, 1);
             this.setBorder(border);
         }
+
+        
     }
 
     public void setListOfTables(Table component){
@@ -32,5 +34,31 @@ public class TablePanel extends JPanel{
 
     public ArrayList<Table> getListOfTables(){
         return listOfTables;
+    }
+
+    public void drawTable(){
+        /**
+         * Draws a table and switches color depending on logic. This re-draws all tables every time its called.
+        */
+        for (Table table : this.getListOfTables()) {
+            this.remove(table);
+
+            if (table.getHasTab()){
+                table.setIcon(table.getOpenTabTableIcon());
+                System.out.println("OPEN Table drawn");
+            }
+
+            else if (!table.getHasTab()){
+                table.setIcon(table.getEmptyTableIcon());
+                System.out.println("EMPTY Table drawn");
+            }
+
+            this.add(table);
+            
+        }
+
+        this.setVisible(true);
+        this.revalidate();
+
     }
 }
