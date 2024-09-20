@@ -10,10 +10,10 @@ public class Product {
     private int amount;
     private SidePanel parentFrame;
     private static int productIdNumberSequence = 1001;
-    public static Product[] listOfEntreeProducts = new Product[5];
-    public static Product[] listOfCourseProducts = new Product[5];
-    public static Product[] listOfDessertProducts = new Product[5];
-    public static Product[] listOfDrinkProducts = new Product[5];
+    private Product[] listOfEntreeProducts = new Product[5];
+    private Product[] listOfCourseProducts = new Product[5];
+    private Product[] listOfDessertProducts = new Product[5];
+    private Product[] listOfDrinkProducts = new Product[5];
 
     public Product(float price, String name, int amount){
         setPrice(price);
@@ -69,7 +69,7 @@ public class Product {
 
     // -------------- METHODS --------------
     
-    public static void createEntreesProducts(){
+    public void createEntreesProducts(){
             float[] priceList = {79.00f, 119.00f, 59.00f, 89.00f, 249.00f};
             String[] nameList = {"Gazpacho", "Sardines & Toast", "Caprese Salad", "Oysters n3","Skagen Toast"};
     
@@ -81,7 +81,7 @@ public class Product {
 
     }
     
-    public static void createMainCourseProducts(){
+    public void createMainCourseProducts(){
 
         float[] priceList = {39.00f, 78.00f, 93.00f, 123.00f, 189.00f};
         String[] nameList = {"Ricebowl", "Sallad", "Chicken", "Salmon","Meat"};
@@ -93,7 +93,7 @@ public class Product {
         }
     }
 
-    public static void createDessertCourseProducts(){
+    public void createDessertCourseProducts(){
         float[] priceList = {69.00f, 78.00f, 59.00f, 250.00f, 999.00f};
         String[] nameList = {"Ice Cream", "Tiramisu", "Mudcake", "Cheese platter","Goldpainted Chocolate"};
 
@@ -104,7 +104,7 @@ public class Product {
         }
     }
 
-    public static void createDrinkProducts(){
+    public void createDrinkProducts(){
         float[] priceList = {24.00f, 33.00f, 39.00f, 29.00f, 55.00f};
         String[] nameList = {"Soda", "Lemonade", "Ice Tea", "Light Soda","Milkshake"};
 
@@ -113,9 +113,5 @@ public class Product {
                 listOfDrinkProducts[i] = new Product(priceList[i], nameList[i], 1);
             }
         }
-    }
-
-    public void drawMenuItems(){
-
     }
 }
