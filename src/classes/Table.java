@@ -1,16 +1,16 @@
 package classes;
 
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
 
-import GUIs.MyPanel;
+import GUIs.TablePanel;
 
 import java.awt.event.*;
 
 public class Table extends JRadioButton implements ActionListener{
 
+    // // -------------- ATTRIBUTES --------------
     private ImageIcon emptyTableImage;
     private ImageIcon selectedTableImage;
     private ImageIcon openTabTableImage;
@@ -18,12 +18,10 @@ public class Table extends JRadioButton implements ActionListener{
     private boolean hasTab;
     private int tableId;
     private OpenTab activeTab;
-    private MyPanel parentFrame;
-    private static int tableCount = 0;
-    public static Table[] listOfTables = new Table[5];
+    private GUIs.TablePanel parentFrame;
 
-
-    public Table(boolean hasTab, int tableId, /* OpenTab activeTab, */ MyPanel frame){
+    // -------------- CONSTRUCTOR --------------
+    public Table(boolean hasTab, int tableId, /* OpenTab activeTab, */ TablePanel frame){
 
         setHasTab(hasTab);
         setTableId(tableId);
@@ -31,10 +29,11 @@ public class Table extends JRadioButton implements ActionListener{
         setParentFrame(frame);
         
         // load images for table logic
-        emptyTableImage = new ImageIcon("C:\\Users\\prett\\Downloads\\Tables\\EmptyTable.png");
-        selectedTableImage = new ImageIcon("C:\\Users\\prett\\Downloads\\Tables\\SelectedTable.png");
-        openTabTableImage = new ImageIcon("C:\\Users\\prett\\Downloads\\Tables\\OpenTabTable.png");
+        emptyTableImage = new ImageIcon("src/images/EmptyTable.png");
+        selectedTableImage = new ImageIcon("src/images/SelectedTable.png");
+        openTabTableImage = new ImageIcon("src/images/OpenTabTable.png");
         
+        // radiobuttons appearance
         this.setSelectedIcon(selectedTableImage); // chooses the image to show when selected
         this.setText(Integer.toString(tableId) + "."); // show the number of the table when drawn
         this.setHorizontalTextPosition(JButton.CENTER); // sets the number x position
@@ -43,22 +42,12 @@ public class Table extends JRadioButton implements ActionListener{
         this.setFocusable(false); // removes the focus border around the text
         this.addActionListener(this); // adds ActionListener to every table
 
-        // adds created table to listOfTables
-        Table.listOfTables[this.tableId - 1] = this;
-
-        // increments tableCount to see when we are done with creating tables
-        tableCount++;
-
-        // draw all tables
-        if (tableCount == 5) {
-            drawTable();
-        }
-
-
-        
+        parentFrame.setListOfTables(this);
     }
 
+    // -------------- METHODS --------------
     public void actionPerformed(ActionEvent e){
+
         if(e.getSource() == this) {
             
             if (this.isSelected()) {
@@ -79,13 +68,11 @@ public class Table extends JRadioButton implements ActionListener{
         
     }
 
-    
     public void drawTable(){
         /**
-         * Draws all the tables and switches color depending on logic. This re-draws all tables every time its called.
-         */
-
-        for (Table table : listOfTables) {
+         * Draws a table and switches color depending on logic. This re-draws all tables every time its called.
+        */
+        for (Table table : parentFrame.getListOfTables()) {
             parentFrame.remove(table);
 
             if (table.hasTab){
@@ -99,29 +86,23 @@ public class Table extends JRadioButton implements ActionListener{
             }
 
             parentFrame.add(table);
-
+            
         }
-        
+
         parentFrame.setVisible(true);
         parentFrame.revalidate();
+
     }
 
-    public static ButtonGroup createButtonGroup(Table[] tables){
-        /**
-         * Creates a ButtonGroup for our list so the user can't select several options at once.
-         * 
-         * @param Table[] tables Takes a list of tables to add to the list
-         * @return Returns a ButtonGroup
-         */
-        ButtonGroup tableButtonGroup = new ButtonGroup();
+    public void clearTable(){
+        this.getParentFrame().remove(this);
 
-        for (Table table : tables) {
-            tableButtonGroup.add(table);
-        }
-
-        return tableButtonGroup;
+        this.getParentFrame().setVisible(true);
+        this.getParentFrame().revalidate();
     }
 
+
+    // -------------- SETTERS --------------
     public void setHasTab(boolean hasTab) {
         this.hasTab = hasTab;
     }
@@ -134,10 +115,11 @@ public class Table extends JRadioButton implements ActionListener{
         this.activeTab = tab;
     }
 
-    public void setParentFrame(MyPanel parentFrame) {
+    public void setParentFrame(TablePanel parentFrame) {
         this.parentFrame = parentFrame;
     }
 
+    // -------------- GETTERS --------------
     public boolean getHasTab(){
         return hasTab;
     }
@@ -150,7 +132,19 @@ public class Table extends JRadioButton implements ActionListener{
         return activeTab;
     }
 
-    public MyPanel getParentFrame() {
+    public TablePanel getParentFrame() {
         return parentFrame;
+    }
+    
+    public ImageIcon getEmptyTableIcon(){
+        return emptyTableImage;
+    }
+
+    public ImageIcon getSelectedTableIcon(){
+        return selectedTableImage;
+    }
+
+    public ImageIcon getOpenTabTableIcon(){
+        return openTabTableImage;
     }
 }

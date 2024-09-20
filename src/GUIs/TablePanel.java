@@ -2,14 +2,19 @@ package GUIs;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-public class MyPanel extends JPanel{
+import classes.Table;
 
-    public MyPanel(int xPosition, int yPosition, int width, int height, int[] colorRGB, boolean hasBorder){
+public class TablePanel extends JPanel{
+
+    private ArrayList<Table> listOfTables = new ArrayList<Table>();
+
+    public TablePanel(int xPosition, int yPosition, int width, int height, int[] colorRGB, boolean hasBorder){
         this.setBounds(xPosition,yPosition,width,height);
         this.setBackground(new Color(colorRGB[0], colorRGB[1], colorRGB[2]));
         this.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 20));
@@ -19,5 +24,13 @@ public class MyPanel extends JPanel{
             Border border = BorderFactory.createLineBorder(Color.DARK_GRAY, 1);
             this.setBorder(border);
         }
+    }
+
+    public void setListOfTables(Table component){
+        listOfTables.add(component);
+    }
+
+    public ArrayList<Table> getListOfTables(){
+        return listOfTables;
     }
 }
