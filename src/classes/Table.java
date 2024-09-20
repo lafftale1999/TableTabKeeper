@@ -4,6 +4,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
 
+import GUIs.BottomPanel;
 import GUIs.SidePanel;
 import GUIs.TablePanel;
 
@@ -20,14 +21,17 @@ public class Table extends JRadioButton implements ActionListener{
     private int tableId;
     private OpenTab activeTab;
     private GUIs.TablePanel tablePanel;
+    private BottomPanel bottomPanel;
 
     // -------------- CONSTRUCTOR --------------
-    public Table(boolean hasTab, int tableId, /* OpenTab activeTab, */ TablePanel tablePanel, SidePanel sidePanel){
+
+    public Table(boolean hasTab, int tableId, /* OpenTab activeTab, */ TablePanel tablePanel, SidePanel sidePanel, BottomPanel bottomPanel){
 
         setHasTab(hasTab);
         setTableId(tableId);
         /* setActiveTab(activeTab); */
         setTablePanel(tablePanel);
+        this.bottomPanel = bottomPanel;
         
         // load images for table logic
         emptyTableImage = new ImageIcon("src/images/EmptyTable.png");
@@ -54,18 +58,10 @@ public class Table extends JRadioButton implements ActionListener{
             
             if (this.isSelected()) {
                 System.out.println("Table " + this.getTableId() + " is selected!");
-                
-                if (!this.hasTab) {
-                    this.hasTab = true;
-                    System.out.println("Tab open");
-                }
             }
 
-            else {
-                System.out.println("Table " + this.getTableId() + " has been unselected!");
-            }
-            
             tablePanel.drawTable();
+            bottomPanel.createInformationBodyBottom(this);
         }
         
     }

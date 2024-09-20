@@ -3,6 +3,7 @@ package mainPackage;
 import javax.swing.ButtonGroup;
 import javax.swing.Scrollable;
 
+import GUIs.BottomPanel;
 import GUIs.MyFrame;
 import GUIs.MyPanel;
 import GUIs.SidePanel;
@@ -26,7 +27,7 @@ public class App {
 
         MyPanel sideBottomPanel = new MyPanel(sidePanel.getX(), sidePanel.getHeight(), sidePanel.getWidth(), frame.getHeight() - sidePanel.getHeight(), bottomPanelColor, true);
         
-        MyPanel bottomPanel = new MyPanel(0, tablePanel.getHeight(), frame.getWidth() - sideBottomPanel.getWidth(), frame.getHeight() - tablePanel.getHeight(), bottomPanelColor, true);
+        BottomPanel bottomPanel = new BottomPanel(0, tablePanel.getHeight(), frame.getWidth() - sideBottomPanel.getWidth(), frame.getHeight() - tablePanel.getHeight(), bottomPanelColor, true, tablePanel);
 
         // adds all panels to the frame
         frame.add(tablePanel);
@@ -34,16 +35,21 @@ public class App {
         frame.add(sideBottomPanel);
         frame.add(bottomPanel);
         
+        // intialise two arrays for the tables
         Table[] listOfTables = new Table[5];
         ButtonGroup tableButtonGroup = new ButtonGroup();
 
-        // create tables and draw tables
+        // create tables and add to arrays/groups
         for (int i = 0; i < amountOfTables; i++) {
-            listOfTables[i] = new Table(false, i + 1, tablePanel, sidePanel);
+            listOfTables[i] = new Table(false, i + 1, tablePanel, sidePanel, bottomPanel);
             tableButtonGroup.add(listOfTables[i]);
         }
 
+        // draw components
         tablePanel.drawTable();
         sidePanel.drawTablesInSidePanel();
+        bottomPanel.createInformationBodyBottom();
+        
+
     }
 }

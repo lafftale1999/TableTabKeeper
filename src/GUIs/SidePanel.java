@@ -2,6 +2,7 @@ package GUIs;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
@@ -14,7 +15,7 @@ import classes.Table;
 
 public class SidePanel extends JPanel{
 
-    private ArrayList<JPanel> listOfPanels = new ArrayList<JPanel>();
+    private ArrayList<TablePanel> listOfPanels = new ArrayList<TablePanel>();
 
     public SidePanel(int xPosition, int yPosition, int width, int height, int[] colorRGB, boolean hasBorder){
         this.setBounds(xPosition,yPosition,width,height);
@@ -30,12 +31,14 @@ public class SidePanel extends JPanel{
 
     public void createContainerForTables(Table table){
         
-        JPanel newPanel = new JPanel();
+        TablePanel newPanel = new TablePanel();
         newPanel.setLayout(new GridLayout(2,1,0,5));
         newPanel.setPreferredSize(new Dimension(this.getWidth() - 10, 50));
         newPanel.setBackground(this.getBackground());
+        newPanel.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
 
         JLabel tableNumberTitle = new JLabel();
+        tableNumberTitle.setFont(new Font(null, Font.BOLD, 20));
         JLabel tableTabTotal = new JLabel();
 
         tableNumberTitle.setText("Table " + table.getTableId());
@@ -49,7 +52,7 @@ public class SidePanel extends JPanel{
 
     public void drawTablesInSidePanel(){
         
-        for (JPanel panel : listOfPanels) {
+        for (TablePanel panel : listOfPanels) {
             this.add(panel);
         }
 

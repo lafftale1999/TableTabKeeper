@@ -14,6 +14,10 @@ public class TablePanel extends JPanel{
 
     private ArrayList<Table> listOfTables = new ArrayList<Table>();
 
+    public TablePanel(){
+        
+    }
+
     public TablePanel(int xPosition, int yPosition, int width, int height, int[] colorRGB, boolean hasBorder){
         this.setBounds(xPosition,yPosition,width,height);
         this.setBackground(new Color(colorRGB[0], colorRGB[1], colorRGB[2]));
