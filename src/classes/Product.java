@@ -1,11 +1,15 @@
 package classes;
+
+import GUIs.SidePanel;
+
 public class Product {
 
     private float price;
     private String name;
     private int productId;
     private int amount;
-    static int productIdNumberSequence = 1001;
+    private SidePanel parentFrame;
+    private static int productIdNumberSequence = 1001;
     public static Product[] listOfEntreeProducts = new Product[5];
     public static Product[] listOfCourseProducts = new Product[5];
     public static Product[] listOfDessertProducts = new Product[5];
@@ -36,6 +40,10 @@ public class Product {
     public static int getProductIdNumberSequence() {
         return productIdNumberSequence;
     }
+
+    public SidePanel getParentFrame(){
+        return this.parentFrame;
+    }
      
     // -------------- SETTERS --------------
 
@@ -53,6 +61,10 @@ public class Product {
 
     public void setProductId(int productId) {
         this.productId = productId;
+    }
+
+    public void setParentFrame(SidePanel parentFrame) {
+        this.parentFrame = parentFrame;
     }
 
     // -------------- METHODS --------------

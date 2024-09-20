@@ -4,6 +4,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
 
+import GUIs.SidePanel;
 import GUIs.TablePanel;
 
 import java.awt.event.*;
@@ -18,15 +19,16 @@ public class Table extends JRadioButton implements ActionListener{
     private boolean hasTab;
     private int tableId;
     private OpenTab activeTab;
-    private GUIs.TablePanel parentFrame;
+    private GUIs.TablePanel tablePanel;
+    private SidePanel sidePanel;
 
     // -------------- CONSTRUCTOR --------------
-    public Table(boolean hasTab, int tableId, /* OpenTab activeTab, */ TablePanel frame){
+    public Table(boolean hasTab, int tableId, /* OpenTab activeTab, */ TablePanel tablePanel, SidePanel sidePanel){
 
         setHasTab(hasTab);
         setTableId(tableId);
         /* setActiveTab(activeTab); */
-        setParentFrame(frame);
+        setTablePanel(tablePanel);
         
         // load images for table logic
         emptyTableImage = new ImageIcon("src/images/EmptyTable.png");
@@ -38,11 +40,12 @@ public class Table extends JRadioButton implements ActionListener{
         this.setText(Integer.toString(tableId) + "."); // show the number of the table when drawn
         this.setHorizontalTextPosition(JButton.CENTER); // sets the number x position
         this.setVerticalTextPosition(JButton.CENTER); // sets the number y position
-        this.setBackground(frame.getBackground()); // matches the parentContainers background
+        this.setBackground(tablePanel.getBackground()); // matches the parentContainers background
         this.setFocusable(false); // removes the focus border around the text
         this.addActionListener(this); // adds ActionListener to every table
 
-        parentFrame.setListOfTables(this);
+        tablePanel.setListOfTables(this);
+        sidePanel.createContainerForTables(this);
     }
 
     // -------------- METHODS --------------
@@ -63,42 +66,16 @@ public class Table extends JRadioButton implements ActionListener{
                 System.out.println("Table " + this.getTableId() + " has been unselected!");
             }
             
-            drawTable();
+            tablePanel.drawTable();
         }
         
     }
 
-    public void drawTable(){
-        /**
-         * Draws a table and switches color depending on logic. This re-draws all tables every time its called.
-        */
-        for (Table table : parentFrame.getListOfTables()) {
-            parentFrame.remove(table);
-
-            if (table.hasTab){
-                table.setIcon(openTabTableImage);
-                System.out.println("OPEN Table drawn");
-            }
-
-            else if (!table.hasTab){
-                table.setIcon(emptyTableImage);
-                System.out.println("EMPTY Table drawn");
-            }
-
-            parentFrame.add(table);
-            
-        }
-
-        parentFrame.setVisible(true);
-        parentFrame.revalidate();
-
-    }
-
     public void clearTable(){
-        this.getParentFrame().remove(this);
+        this.getTablePanel().remove(this);
 
-        this.getParentFrame().setVisible(true);
-        this.getParentFrame().revalidate();
+        this.getTablePanel().setVisible(true);
+        this.getTablePanel().revalidate();
     }
 
 
@@ -115,8 +92,8 @@ public class Table extends JRadioButton implements ActionListener{
         this.activeTab = tab;
     }
 
-    public void setParentFrame(TablePanel parentFrame) {
-        this.parentFrame = parentFrame;
+    public void setTablePanel(TablePanel parentFrame) {
+        this.tablePanel = parentFrame;
     }
 
     // -------------- GETTERS --------------
@@ -132,8 +109,8 @@ public class Table extends JRadioButton implements ActionListener{
         return activeTab;
     }
 
-    public TablePanel getParentFrame() {
-        return parentFrame;
+    public TablePanel getTablePanel() {
+        return tablePanel;
     }
     
     public ImageIcon getEmptyTableIcon(){
