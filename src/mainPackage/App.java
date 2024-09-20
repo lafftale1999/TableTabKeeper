@@ -2,9 +2,11 @@ package mainPackage;
 import java.text.NumberFormat;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JPanel;
 
 import GUIs.MyFrame;
 import GUIs.MyPanel;
+import GUIs.TablePanel;
 import classes.Product;
 import classes.Table;
 
@@ -12,41 +14,37 @@ public class App {
     public static void main(String[] args) throws Exception {
         MyFrame frame = new MyFrame();
 
-        // creates the mainMenu list with Product objects
-        Product[] mainMenu = Product.createMainMenu();
+        int amountOfTables = 5;
 
         // backgrounds colors for our panels
         int[] mainPanelColor = {233,233,233};
         int[] sidePanelColor = {210,210,210};
         int[] bottomPanelColor = {178,178,178};
         
-        // intitializes an array of panels
-        MyPanel[] arrayOfPanels = new MyPanel[4];
+        TablePanel tablePanel = new TablePanel(0,0,700,550,mainPanelColor, true);
         
-        // mainpanel
-        arrayOfPanels[0] = new MyPanel(0,0,700,550,mainPanelColor, true);
+        MyPanel sidePanel = new MyPanel(tablePanel.getWidth(), 0, frame.getWidth() - tablePanel.getWidth(), 550, sidePanelColor, true);
         
-        // sidepanel should be scrollable since it should be able to receive transactions out of bounds.
-        arrayOfPanels[1] = new MyPanel(arrayOfPanels[0].getWidth(), 0, frame.getWidth() - arrayOfPanels[0].getWidth(), 550, sidePanelColor, true);
+        MyPanel sideBottomPanel = new MyPanel(sidePanel.getX(), sidePanel.getHeight(), sidePanel.getWidth(), frame.getHeight() - sidePanel.getHeight(), bottomPanelColor, true);
         
-        // sidebottompanel
-        arrayOfPanels[2] = new MyPanel(arrayOfPanels[1].getX(), arrayOfPanels[1].getHeight(), arrayOfPanels[1].getWidth(), frame.getHeight() - arrayOfPanels[1].getHeight(), bottomPanelColor, true);
-        
-        // bottompanel
-        arrayOfPanels[3] = new MyPanel(0, arrayOfPanels[0].getHeight(), frame.getWidth() - arrayOfPanels[1].getWidth(), frame.getHeight() - arrayOfPanels[0].getHeight(), bottomPanelColor, true);
+        MyPanel bottomPanel = new MyPanel(0, tablePanel.getHeight(), frame.getWidth() - sideBottomPanel.getWidth(), frame.getHeight() - tablePanel.getHeight(), bottomPanelColor, true);
 
         // adds all panels to the frame
-        for (MyPanel panel : arrayOfPanels) {
-            frame.add(panel);
-        }
+        frame.add(tablePanel);
+        frame.add(sidePanel);
+        frame.add(sideBottomPanel);
+        frame.add(bottomPanel);
+        
+        Table[] listOfTables = new Table[5];
+        ButtonGroup tableButtonGroup = new ButtonGroup();
 
         // create tables and draw tables
-        for (int i = 0; i < Table.listOfTables.length; i++) {
-            Table.listOfTables[i] = new Table(false, i + 1, arrayOfPanels[0]);
+        for (int i = 0; i < amountOfTables; i++) {
+            listOfTables[i] = new Table(false, i + 1, tablePanel);
+            tableButtonGroup.add(listOfTables[i]);
         }
 
-        // create a buttonGroup so you cant select several tables at once
-        ButtonGroup tableButtonGroup = Table.createButtonGroup(Table.listOfTables);
+        listOfTables[0].drawTable();
 
     }
 }
