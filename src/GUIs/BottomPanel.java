@@ -27,7 +27,18 @@ public class BottomPanel extends JPanel{
         this.setBackground(new Color(colorRGB[0], colorRGB[1], colorRGB[2]));
         this.setLayout(new GridLayout(2,1));
 
-        
+        tabButton.setBackground(new Color(0x00507A));
+        tabButton.setFont(new Font("Verdana", Font.PLAIN,16));
+        tabButton.setForeground(Color.WHITE);
+        tabButton.setPreferredSize(new Dimension(200, 50));
+
+        transactionButton.setBorder(BorderFactory.createLineBorder(new Color(0x00507A), 2));
+        transactionButton.setBackground(Color.WHITE);
+        transactionButton.setFont(new Font("Verdana", Font.PLAIN,16));
+        transactionButton.setForeground(new Color(0x00507A));
+        transactionButton.setPreferredSize(new Dimension(200, 50));
+
+
         this.tablePanel = tablePanel;
 
         if (hasBorder == true){
@@ -104,7 +115,7 @@ public class BottomPanel extends JPanel{
         
         JPanel newPanel = new JPanel();
 
-        newPanel.setLayout(new GridLayout(2,1,0,5));
+        newPanel.setLayout(new FlowLayout(FlowLayout.CENTER,0,20));
         newPanel.setPreferredSize(new Dimension(this.getWidth() - 10, 50));
         newPanel.setBackground(this.getBackground());
         newPanel.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
@@ -119,7 +130,10 @@ public class BottomPanel extends JPanel{
         });
 
         tabButton.addActionListener(e -> {
-            System.out.println(table.getTableId());
+            if (table.isSelected()){
+                System.out.println(table.getTableId());
+            }
+            
         });
 
         newPanel.add(tabButton);
@@ -132,7 +146,7 @@ public class BottomPanel extends JPanel{
 
     public void createButtonsBottomPanel(){
         JPanel newPanel = new JPanel();
-        newPanel.setLayout(new GridLayout(2,1,0,5));
+        newPanel.setLayout(new FlowLayout(FlowLayout.CENTER,0,20));
         newPanel.setPreferredSize(new Dimension(this.getWidth() - 10, 50));
         newPanel.setBackground(this.getBackground());
         newPanel.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));

@@ -11,7 +11,7 @@ public class MyFrame extends JFrame{
         this.setIconImage(image.getImage());
         
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(1000,800);
+        this.setSize(1000,850);
         this.setLayout(null);
         this.setVisible(true);
         this.setTitle("TableTab - Keep your tabs in order!");
