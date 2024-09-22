@@ -1,18 +1,18 @@
 package mainPackage;
 
 import javax.swing.ButtonGroup;
-import javax.swing.Scrollable;
-
 import GUIs.BottomPanel;
 import GUIs.MyFrame;
 import GUIs.MyPanel;
 import GUIs.SidePanel;
 import GUIs.TablePanel;
+import classes.MenuItems;
 import classes.Table;
 
 public class App {
     public static void main(String[] args) throws Exception {
         MyFrame frame = new MyFrame();
+        MenuItems menuItems = new MenuItems();
 
         int amountOfTables = 5;
 
@@ -27,7 +27,7 @@ public class App {
 
         MyPanel sideBottomPanel = new MyPanel(sidePanel.getX(), sidePanel.getHeight(), sidePanel.getWidth(), frame.getHeight() - sidePanel.getHeight(), bottomPanelColor, true);
         
-        BottomPanel bottomPanel = new BottomPanel(0, tablePanel.getHeight(), frame.getWidth() - sideBottomPanel.getWidth(), frame.getHeight() - tablePanel.getHeight(), bottomPanelColor, true, tablePanel);
+        BottomPanel bottomPanel = new BottomPanel(0, tablePanel.getHeight(), frame.getWidth() - sideBottomPanel.getWidth(), frame.getHeight() - tablePanel.getHeight(), bottomPanelColor, true, tablePanel, menuItems);
 
         // adds all panels to the frame
         frame.add(tablePanel);
@@ -50,6 +50,9 @@ public class App {
         sidePanel.drawTablesInSidePanel();
         bottomPanel.createInformationBodyBottom();
         
-
+        for (MenuItems item : menuItems.getListOfCourseProducts()) {
+            System.out.println(item.getName());
+            System.out.println(item.getPrice());
+        }
     }
 }

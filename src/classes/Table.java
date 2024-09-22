@@ -29,7 +29,6 @@ public class Table extends JRadioButton implements ActionListener{
 
         setHasTab(hasTab);
         setTableId(tableId);
-        /* setActiveTab(activeTab); */
         setTablePanel(tablePanel);
         this.bottomPanel = bottomPanel;
         

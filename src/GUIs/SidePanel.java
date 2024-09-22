@@ -35,14 +35,14 @@ public class SidePanel extends JPanel{
         newPanel.setLayout(new GridLayout(2,1,0,5));
         newPanel.setPreferredSize(new Dimension(this.getWidth() - 10, 50));
         newPanel.setBackground(this.getBackground());
-        newPanel.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
 
         JLabel tableNumberTitle = new JLabel();
         tableNumberTitle.setFont(new Font(null, Font.BOLD, 20));
         JLabel tableTabTotal = new JLabel();
 
         tableNumberTitle.setText("Table " + table.getTableId());
-        tableTabTotal.setText("Total: 5 000,00 kr");
+        if (table.getHasTab())
+            tableTabTotal.setText("Total: 5 000,00 kr");
 
         newPanel.add(tableNumberTitle);
         newPanel.add(tableTabTotal);

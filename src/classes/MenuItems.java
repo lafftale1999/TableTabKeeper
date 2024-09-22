@@ -1,26 +1,44 @@
 package classes;
 
 import GUIs.SidePanel;
+import java.util.ArrayList;
 
-public class Product {
+public class MenuItems {
 
     private float price;
     private String name;
     private int productId;
     private int amount;
     private SidePanel parentFrame;
+    private String typeOfProduct;
     private static int productIdNumberSequence = 1001;
-    private Product[] listOfEntreeProducts = new Product[5];
-    private Product[] listOfCourseProducts = new Product[5];
-    private Product[] listOfDessertProducts = new Product[5];
-    private Product[] listOfDrinkProducts = new Product[5];
+    private ArrayList<MenuItems> listOfEntreeProducts = new ArrayList<MenuItems>();
+    private ArrayList<MenuItems> listOfCourseProducts = new ArrayList<MenuItems>();
+    private ArrayList<MenuItems> listOfDessertProducts = new ArrayList<MenuItems>();
+    private ArrayList<MenuItems> listOfDrinkProducts = new ArrayList<MenuItems>();
 
-    public Product(float price, String name, int amount){
+    private MenuItems(float price, String name, int amount, String typeOfProduct){
         setPrice(price);
         setName(name);
         setAmount(amount);
+        setTypeOfProduct(typeOfProduct);
         setProductId(productIdNumberSequence);
         productIdNumberSequence++;
+    }
+
+    public MenuItems(){
+        createEntreesProducts();
+        createMainCourseProducts();
+        createDessertCourseProducts();
+        createDrinkProducts();
+    }
+
+    public MenuItems(String name, float price, int amount, String typeOfProduct, int productId){
+        setName(name);
+        setPrice(price);
+        setAmount(amount);
+        setTypeOfProduct(typeOfProduct);
+        setProductId(productId);
     }
 
     // -------------- GETTERS --------------
@@ -44,7 +62,27 @@ public class Product {
     public SidePanel getParentFrame(){
         return this.parentFrame;
     }
-     
+
+    public String getTypeOfProduct() {
+        return typeOfProduct;
+    }
+
+    public ArrayList<MenuItems> getListOfCourseProducts(){
+        return listOfCourseProducts;
+    }
+
+    public ArrayList<MenuItems> getListOfEntreeProducts(){
+        return listOfEntreeProducts;
+    }
+
+    public ArrayList<MenuItems> getListOfDessertProducts(){
+        return listOfDessertProducts;
+    }
+
+    public ArrayList<MenuItems> getListOfDrinksProducts(){
+        return listOfDrinkProducts;
+    }
+
     // -------------- SETTERS --------------
 
     public void setAmount(int amount) {
@@ -67,50 +105,54 @@ public class Product {
         this.parentFrame = parentFrame;
     }
 
+    public void setTypeOfProduct(String typeOfProduct) {
+        this.typeOfProduct = typeOfProduct;
+    }
+
     // -------------- METHODS --------------
     
-    public void createEntreesProducts(){
+    private void createEntreesProducts(){
             float[] priceList = {79.00f, 119.00f, 59.00f, 89.00f, 249.00f};
             String[] nameList = {"Gazpacho", "Sardines & Toast", "Caprese Salad", "Oysters n3","Skagen Toast"};
     
             if (priceList.length == nameList.length) {
                 for (int i = 0; i < priceList.length; i++){
-                    listOfEntreeProducts[i] = new Product(priceList[i], nameList[i], 1);
+                    listOfEntreeProducts.add(new MenuItems(priceList[i], nameList[i], 1, "Entree"));
                 }
             }
 
     }
     
-    public void createMainCourseProducts(){
+    private void createMainCourseProducts(){
 
         float[] priceList = {39.00f, 78.00f, 93.00f, 123.00f, 189.00f};
         String[] nameList = {"Ricebowl", "Sallad", "Chicken", "Salmon","Meat"};
 
         if (priceList.length == nameList.length) {
             for (int i = 0; i < priceList.length; i++){
-                listOfCourseProducts[i] = new Product(priceList[i], nameList[i], 1);
+                listOfCourseProducts.add(new MenuItems(priceList[i], nameList[i], 1, "Main"));
             }
         }
     }
 
-    public void createDessertCourseProducts(){
+    private void createDessertCourseProducts(){
         float[] priceList = {69.00f, 78.00f, 59.00f, 250.00f, 999.00f};
         String[] nameList = {"Ice Cream", "Tiramisu", "Mudcake", "Cheese platter","Goldpainted Chocolate"};
 
         if (priceList.length == nameList.length) {
             for (int i = 0; i < priceList.length; i++){
-                listOfDessertProducts[i] = new Product(priceList[i], nameList[i], 1);
+                listOfDessertProducts.add(new MenuItems(priceList[i], nameList[i], 1, "Dessert"));
             }
         }
     }
 
-    public void createDrinkProducts(){
+    private void createDrinkProducts(){
         float[] priceList = {24.00f, 33.00f, 39.00f, 29.00f, 55.00f};
         String[] nameList = {"Soda", "Lemonade", "Ice Tea", "Light Soda","Milkshake"};
 
         if (priceList.length == nameList.length) {
             for (int i = 0; i < priceList.length; i++){
-                listOfDrinkProducts[i] = new Product(priceList[i], nameList[i], 1);
+                listOfDrinkProducts.add(new MenuItems(priceList[i], nameList[i], 1, "Drink"));
             }
         }
     }
