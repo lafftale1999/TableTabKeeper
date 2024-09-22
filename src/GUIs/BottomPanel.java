@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import java.util.ArrayList;
 import javax.swing.border.Border;
 import java.awt.Event;
+import java.text.NumberFormat;
 
 import classes.Table;
 import classes.MenuItems;
@@ -117,7 +118,7 @@ public class BottomPanel extends JPanel{
         // create description
         JLabel description = new JLabel();
         if (table.getHasTab()){
-            description.setText(Float.toString(table.getActiveTab().getTabTotal()));
+            description.setText(NumberFormat.getCurrencyInstance().format(table.getActiveTab().getTabTotal()));
         }
 
         else {
