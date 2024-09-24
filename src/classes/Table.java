@@ -22,16 +22,17 @@ public class Table extends JRadioButton implements ActionListener{
     private OpenTab activeTab;
     private GUIs.TablePanel tablePanel;
     private BottomPanel bottomPanel;
+    private SidePanel sidePanel;
 
     // -------------- CONSTRUCTOR --------------
 
-    public Table(boolean hasTab, int tableId, /* OpenTab activeTab, */ TablePanel tablePanel, SidePanel sidePanel, BottomPanel bottomPanel){
+    public Table(boolean hasTab, int tableId, TablePanel tablePanel, SidePanel sidePanel, BottomPanel bottomPanel){
 
         setHasTab(hasTab);
         setTableId(tableId);
-        /* setActiveTab(activeTab); */
         setTablePanel(tablePanel);
         this.bottomPanel = bottomPanel;
+        this.sidePanel = sidePanel;
         
         // load images for table logic
         emptyTableImage = new ImageIcon("src/images/EmptyTable.png");
@@ -48,10 +49,10 @@ public class Table extends JRadioButton implements ActionListener{
         this.addActionListener(this); // adds ActionListener to every table
 
         tablePanel.setListOfTables(this);
-        sidePanel.createContainerForTables(this);
     }
 
     // -------------- METHODS --------------
+    // SÄTT DENNA I HUVUDMETODEN FÖR VIEWTABLES
     public void actionPerformed(ActionEvent e){
 
         if(e.getSource() == this) {
@@ -62,6 +63,7 @@ public class Table extends JRadioButton implements ActionListener{
 
             tablePanel.drawTable();
             bottomPanel.createInformationBodyBottom(this);
+            sidePanel.createContainerForTables();
         }
         
     }
