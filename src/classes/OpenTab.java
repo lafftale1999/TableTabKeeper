@@ -24,8 +24,9 @@ public class OpenTab {
         this.tabTotal += amount;
     }
 
-    public void addMenuItem(MenuItems menuItems){
-        MenuItems newMenuItem = new MenuItems(menuItems.getName(), menuItems.getPrice(), menuItems.getAmount(), menuItems.getTypeOfProduct(), menuItems.getProductId());
+    // KOLLA OM DENNA BLIR ETT NYTT OBJEKT ELLER OM DET PEKAR MOT SAMMA.
+    public void addMenuItem(MenuItems menuItems, int amount){
+        MenuItems newMenuItem = new MenuItems(menuItems.getName(), menuItems.getPrice(), amount, menuItems.getTypeOfProduct(), menuItems.getProductId());
         listOfMenuItems.add(newMenuItem);
         updateTabTotal(newMenuItem.getAmount() * newMenuItem.getPrice());
     }

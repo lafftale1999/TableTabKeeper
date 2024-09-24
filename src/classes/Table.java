@@ -52,6 +52,7 @@ public class Table extends JRadioButton implements ActionListener{
     }
 
     // -------------- METHODS --------------
+    // SÄTT DENNA I HUVUDMETODEN FÖR VIEWTABLES
     public void actionPerformed(ActionEvent e){
 
         if(e.getSource() == this) {
