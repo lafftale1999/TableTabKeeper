@@ -7,24 +7,23 @@ import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.util.ArrayList;
 import javax.swing.border.Border;
-import java.awt.Event;
 import java.text.NumberFormat;
 
 import classes.Table;
 import classes.MenuItems;
-import classes.OpenTab;
 
 public class BottomPanel extends JPanel{
     
     private TablePanel tablePanel;
     private ArrayList<JPanel> listOfPanels = new ArrayList<JPanel>();
-    private JButton tabButton = new JButton();
-    private JButton transactionButton = new JButton();
+    private FilledButton tabButton = new FilledButton();
+    private BorderButton transactionButton = new BorderButton();
+    private FilledButton payButton = new FilledButton();
+    private BorderButton backButton = new BorderButton();
     private MenuItems menuItems;
     private Table currentTable;
 
@@ -32,38 +31,7 @@ public class BottomPanel extends JPanel{
         this.setBounds(xPosition,yPosition,width,height);
         this.setBackground(new Color(colorRGB[0], colorRGB[1], colorRGB[2]));
         this.setLayout(new GridLayout(3,1, 0, 0));
-        this.menuItems = menuItems;
-
-        // set button graphics
-        // TAB
-        tabButton.setBackground(new Color(0x00507A));
-        tabButton.setFont(new Font("Verdana", Font.PLAIN,16));
-        tabButton.setForeground(Color.WHITE);
-        tabButton.setPreferredSize(new Dimension(200, 50));
-        tabButton.setFocusable(false);
-        
-        tabButton.addActionListener(e -> {
-            if (currentTable.getHasTab()){
-                System.out.println("The active tab is: " + currentTable.getActiveTab().getTabId());
-            }
-            else {
-                currentTable.setActiveTab(new OpenTab(currentTable, menuItems));
-                System.out.println("You have created a new tab with ID: " + currentTable.getActiveTab().getTabId());
-                ;
-            }
-        });
-
-        // TRANSACTIONS
-        transactionButton.setBorder(BorderFactory.createLineBorder(new Color(0x00507A), 2));
-        transactionButton.setBackground(Color.WHITE);
-        transactionButton.setFont(new Font("Verdana", Font.PLAIN,16));
-        transactionButton.setForeground(new Color(0x00507A));
-        transactionButton.setPreferredSize(new Dimension(200, 50));
-        transactionButton.setText("Transactions");
-        transactionButton.setFocusable(false);
-        transactionButton.addActionListener(e -> {
-        System.out.println("Open transactions");
-        });
+        this.setMenuItems(menuItems);
 
         // get the tablePanel
         this.tablePanel = tablePanel;
@@ -75,6 +43,7 @@ public class BottomPanel extends JPanel{
         }
     }
 
+    // ------------------------- VIEW TABLES ----------------------------
     public JPanel createInformationPanel(){
         /** Creates a panel to store labels in
          * 
@@ -88,7 +57,7 @@ public class BottomPanel extends JPanel{
 
         return newPanel;
     }
-    // CREATE BOTTOMPANEL WITH A TABLE SELECTED
+    
     public void createInformationBodyBottom(Table table){
         /**
          * Creates a panel containting two labels. A title and description. Calls the function create buttons
@@ -137,7 +106,6 @@ public class BottomPanel extends JPanel{
         createButtonsBottomPanel(table);
     }
 
-    // CREATE BOTTOM PANEL WITHOUT ANY SELECTED TABLES
     public void createInformationBodyBottom(){
         /** Overloaded method when the user hasn't selected any tables */
         
@@ -188,7 +156,7 @@ public class BottomPanel extends JPanel{
 
         return newPanel;
     }
-    // CREATE BUTTON WITH TABLE SELECTED
+    
     public void createButtonsBottomPanel(Table table){
         /** Creates newPanel and two buttons. One for the selected table and one for opening transactions.
          * Adds these buttons to newPanel and calls the drawBottomPanel() function.
@@ -259,5 +227,34 @@ public class BottomPanel extends JPanel{
     // -------------SETTERS------------------
     public void setCurrentTable(Table currentTable) {
         this.currentTable = currentTable;
+    }
+
+    public void setMenuItems(MenuItems menuItems) {
+        this.menuItems = menuItems;
+    }
+
+    // -------------GETTERS------------------
+    public FilledButton getPayButton() {
+        return payButton;
+    }
+
+    public BorderButton getBackButton() {
+        return backButton;
+    }
+
+    public FilledButton getTabButton() {
+        return tabButton;
+    }
+
+    public BorderButton getTransactionButton() {
+        return transactionButton;
+    }
+
+    public MenuItems getMenuItems() {
+        return menuItems;
+    }
+
+    public Table getCurrentTable() {
+        return currentTable;
     }
 }

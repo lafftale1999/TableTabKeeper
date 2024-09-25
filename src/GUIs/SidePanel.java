@@ -17,14 +17,11 @@ import classes.Table;
 public class SidePanel extends JPanel{
 
     private ArrayList<TablePanel> listOfPanels = new ArrayList<TablePanel>();
-    private TablePanel tablePanel;
 
-    public SidePanel(int xPosition, int yPosition, int width, int height, int[] colorRGB, boolean hasBorder, TablePanel tablePanel){
+    public SidePanel(int xPosition, int yPosition, int width, int height, int[] colorRGB, boolean hasBorder){
         this.setBounds(xPosition,yPosition,width,height);
         this.setBackground(new Color(colorRGB[0], colorRGB[1], colorRGB[2]));
         this.setLayout(new GridLayout(5,1,10,10));
-
-        this.tablePanel = tablePanel;
         
 
         if (hasBorder == true){
@@ -33,7 +30,7 @@ public class SidePanel extends JPanel{
         }
     }
 
-    public void createContainerForTables(){
+    public void createContainerForTables(Table[] listOfTables){
 
         if (listOfPanels.size() > 0) {
             for (JPanel panel : listOfPanels){
@@ -44,7 +41,7 @@ public class SidePanel extends JPanel{
             
         }
 
-        for (Table table : tablePanel.getListOfTables()) {
+        for (Table table : listOfTables) {
             TablePanel newPanel = new TablePanel();
             newPanel.setLayout(new GridLayout(2,1,0,5));
             newPanel.setPreferredSize(new Dimension(this.getWidth() - 10, 50));

@@ -40,11 +40,11 @@ public class TablePanel extends JPanel{
         return listOfTables;
     }
 
-    public void drawTable(){
+    public void drawTable(Table[] listOfTables){
         /**
          * Draws a table and switches color depending on logic. This re-draws all tables every time its called.
         */
-        for (Table table : this.getListOfTables()) {
+        for (Table table : listOfTables) {
             this.remove(table);
 
             if (table.getHasTab()){

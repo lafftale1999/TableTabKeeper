@@ -26,9 +26,26 @@ public class OpenTab {
 
     // KOLLA OM DENNA BLIR ETT NYTT OBJEKT ELLER OM DET PEKAR MOT SAMMA.
     public void addMenuItem(MenuItems menuItems, int amount){
-        MenuItems newMenuItem = new MenuItems(menuItems.getName(), menuItems.getPrice(), amount, menuItems.getTypeOfProduct(), menuItems.getProductId());
+        MenuItems newMenuItem = new MenuItems(menuItems.getName(), menuItems.getPrice(), amount, menuItems.getTypeOfProduct(), menuItems.getProductId(), menuItems.getTaxGroup());
         listOfMenuItems.add(newMenuItem);
         updateTabTotal(newMenuItem.getAmount() * newMenuItem.getPrice());
+    }
+
+    public float[] calculateTaxes(){
+
+        float[] listOfTaxes = new float[2];
+    
+        for (MenuItems product : listOfMenuItems){
+            if (product.getTaxGroup() == 0.25f){
+                listOfTaxes[1] += (product.getPrice() * product.getAmount()) * 0.25f;
+            }
+        
+            else {
+                listOfTaxes[0] = (product.getPrice() * product.getAmount()) * 0.12f;
+            }
+        }
+
+        return listOfTaxes;
     }
 
     public ArrayList<MenuItems> getListOfMenuItems() {
