@@ -4,9 +4,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
 
-import GUIs.BottomPanel;
-import GUIs.SidePanel;
-import GUIs.TablePanel;
+import GUIs.MainPanel;
 
 public class Table extends JRadioButton{
 
@@ -18,11 +16,11 @@ public class Table extends JRadioButton{
     private boolean hasTab;
     private int tableId;
     private OpenTab activeTab;
-    private GUIs.TablePanel tablePanel;
+    private GUIs.MainPanel tablePanel;
 
     // -------------- CONSTRUCTOR --------------
 
-    public Table(boolean hasTab, int tableId, TablePanel mainPanel){
+    public Table(boolean hasTab, int tableId, MainPanel mainPanel){
 
         setHasTab(hasTab);
         setTableId(tableId);
@@ -44,7 +42,7 @@ public class Table extends JRadioButton{
 
     // -------------- METHODS --------------
 
-    public void clearTable(TablePanel mainPanel){
+    public void clearTable(MainPanel mainPanel){
         mainPanel.remove(this);
 
         mainPanel.setVisible(true);
@@ -65,7 +63,7 @@ public class Table extends JRadioButton{
         this.activeTab = tab;
     }
 
-    public void setTablePanel(TablePanel parentFrame) {
+    public void setTablePanel(MainPanel parentFrame) {
         this.tablePanel = parentFrame;
     }
 
@@ -82,7 +80,7 @@ public class Table extends JRadioButton{
         return activeTab;
     }
 
-    public TablePanel getTablePanel() {
+    public MainPanel getTablePanel() {
         return tablePanel;
     }
     

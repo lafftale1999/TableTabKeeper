@@ -23,17 +23,16 @@ public class App {
         int[] bottomPanelColor = {178,178,178};
         
         // VIEWTABLES PANELS
-        MainPanel tablePanel = new MainPanel(0,0,700,550,mainPanelColor, true);
+        MainPanel mainPanel = new MainPanel(0,0,700,550,mainPanelColor, true);
         
-        SidePanel sidePanel = new SidePanel(tablePanel.getWidth(), 0, frame.getWidth() - tablePanel.getWidth(), 550, sidePanelColor, true);
+        SidePanel sidePanel = new SidePanel(mainPanel.getWidth(), 0, frame.getWidth() - mainPanel.getWidth(), 550, sidePanelColor, true);
 
         SideBottomPanel sideBottomPanel = new SideBottomPanel(sidePanel.getX(), sidePanel.getHeight(), sidePanel.getWidth(), frame.getHeight() - sidePanel.getHeight(), bottomPanelColor, true);
         
-        BottomPanel bottomPanel = new BottomPanel(0, tablePanel.getHeight(), frame.getWidth() - sideBottomPanel.getWidth(), frame.getHeight() - tablePanel.getHeight(), bottomPanelColor, true, tablePanel, menuItems);
+        BottomPanel bottomPanel = new BottomPanel(0, mainPanel.getHeight(), frame.getWidth() - sideBottomPanel.getWidth(), frame.getHeight() - mainPanel.getHeight(), bottomPanelColor, true, menuItems);
 
-        ViewTables viewTables = new ViewTables(frame, tablePanel, sidePanel, bottomPanel, sideBottomPanel);
+        ViewTables viewTables = new ViewTables(frame, mainPanel, sidePanel, bottomPanel, sideBottomPanel, null);
         
-        // set next layer för varje viewclass
         viewTables.drawViewTables();
 
 

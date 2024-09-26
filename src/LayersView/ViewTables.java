@@ -21,12 +21,13 @@ public class ViewTables extends JPanel{
     private Table[] listOfTables = new Table[5];
     private ButtonGroup tableButtonGroup = new ButtonGroup();
 
-    public ViewTables(MyFrame frame, MainPanel mainPanel, SidePanel sidePanel, BottomPanel bottomPanel, SideBottomPanel sideBottomPanel){
+    public ViewTables(MyFrame frame, MainPanel mainPanel, SidePanel sidePanel, BottomPanel bottomPanel, SideBottomPanel sideBottomPanel, ViewTab nextLayer){
         setBottomPanel(bottomPanel);
         setMainPanel(mainPanel);
         setSidePanel(sidePanel);
         setSideBottomPanel(sideBottomPanel);
         setFrame(frame);
+        this.nextLayer = nextLayer;
         
 
         bottomPanel.getTabButton().addActionListener(e -> {
@@ -97,13 +98,5 @@ public class ViewTables extends JPanel{
 
     public void setFrame(MyFrame frame) {
         this.frame = frame;
-    }
-
-    public void setNextLayer(ViewTab nextLayer) {
-        this.nextLayer = nextLayer;
-    }
-
-    public ViewTab getNextLayer() {
-        return nextLayer;
     }
 }

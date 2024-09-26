@@ -16,7 +16,7 @@ import classes.Table;
 
 public class SidePanel extends JPanel{
 
-    private ArrayList<TablePanel> listOfPanels = new ArrayList<TablePanel>();
+    private ArrayList<MainPanel> listOfPanels = new ArrayList<MainPanel>();
 
     public SidePanel(int xPosition, int yPosition, int width, int height, int[] colorRGB, boolean hasBorder){
         this.setBounds(xPosition,yPosition,width,height);
@@ -42,7 +42,7 @@ public class SidePanel extends JPanel{
         }
 
         for (Table table : listOfTables) {
-            TablePanel newPanel = new TablePanel();
+            MainPanel newPanel = new MainPanel();
             newPanel.setLayout(new GridLayout(2,1,0,5));
             newPanel.setPreferredSize(new Dimension(this.getWidth() - 10, 50));
             newPanel.setBackground(this.getBackground());
@@ -67,7 +67,7 @@ public class SidePanel extends JPanel{
 
     public void drawTablesInSidePanel(){
 
-        for (TablePanel panel : listOfPanels) {
+        for (MainPanel panel : listOfPanels) {
             this.add(panel);
         }
 

@@ -12,21 +12,20 @@ public class MenuItems {
     private SidePanel parentFrame;
     private String typeOfProduct;
     private float taxGroup;
-    private static int productIdNumberSequence = 1001;
+    private int productIdNumberSequence = 1000;
     private ArrayList<MenuItems> listOfEntreeProducts = new ArrayList<MenuItems>();
     private ArrayList<MenuItems> listOfCourseProducts = new ArrayList<MenuItems>();
     private ArrayList<MenuItems> listOfDessertProducts = new ArrayList<MenuItems>();
     private ArrayList<MenuItems> listOfDrinkProducts = new ArrayList<MenuItems>();
 
     private MenuItems(float price, String name, int amount, String typeOfProduct, float taxGroup){
+        productIdNumberSequence++;
         setPrice(price);
         setName(name);
         setAmount(amount);
         setTypeOfProduct(typeOfProduct);
         setProductId(productIdNumberSequence);
         setTaxGroup(taxGroup);
-
-        productIdNumberSequence++;
     }
 
     public MenuItems(){
@@ -59,7 +58,7 @@ public class MenuItems {
     public int getProductId() {
         return productId;
     }
-    public static int getProductIdNumberSequence() {
+    public int getProductIdNumberSequence() {
         return productIdNumberSequence;
     }
 

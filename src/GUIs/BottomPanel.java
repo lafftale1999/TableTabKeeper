@@ -18,23 +18,19 @@ import classes.MenuItems;
 
 public class BottomPanel extends JPanel{
     
-    private TablePanel tablePanel;
     private ArrayList<JPanel> listOfPanels = new ArrayList<JPanel>();
     private FilledButton tabButton = new FilledButton();
-    private BorderButton transactionButton = new BorderButton();
+    private BorderButton transactionButton = new BorderButton("Transactions");
     private FilledButton payButton = new FilledButton();
-    private BorderButton backButton = new BorderButton();
+    private BorderButton backButton = new BorderButton("Go Back");
     private MenuItems menuItems;
     private Table currentTable;
 
-    public BottomPanel(int xPosition, int yPosition, int width, int height, int[] colorRGB, boolean hasBorder, TablePanel tablePanel, MenuItems menuItems){
+    public BottomPanel(int xPosition, int yPosition, int width, int height, int[] colorRGB, boolean hasBorder, MenuItems menuItems){
         this.setBounds(xPosition,yPosition,width,height);
         this.setBackground(new Color(colorRGB[0], colorRGB[1], colorRGB[2]));
         this.setLayout(new GridLayout(3,1, 0, 0));
         this.setMenuItems(menuItems);
-
-        // get the tablePanel
-        this.tablePanel = tablePanel;
 
         // set border for panel
         if (hasBorder == true){

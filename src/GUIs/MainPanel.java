@@ -10,15 +10,15 @@ import javax.swing.border.Border;
 
 import classes.Table;
 
-public class TablePanel extends JPanel{
+public class MainPanel extends JPanel{
 
     private ArrayList<Table> listOfTables = new ArrayList<Table>();
 
-    public TablePanel(){
+    public MainPanel(){
         
     }
 
-    public TablePanel(int xPosition, int yPosition, int width, int height, int[] colorRGB, boolean hasBorder){
+    public MainPanel(int xPosition, int yPosition, int width, int height, int[] colorRGB, boolean hasBorder){
         this.setBounds(xPosition,yPosition,width,height);
         this.setBackground(new Color(colorRGB[0], colorRGB[1], colorRGB[2]));
         this.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 20));

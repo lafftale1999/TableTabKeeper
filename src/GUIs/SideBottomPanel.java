@@ -7,9 +7,9 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-public class MyPanel extends JPanel{
+public class SideBottomPanel extends JPanel{
 
-    public MyPanel(int xPosition, int yPosition, int width, int height, int[] colorRGB, boolean hasBorder){
+    public SideBottomPanel(int xPosition, int yPosition, int width, int height, int[] colorRGB, boolean hasBorder){
         this.setBounds(xPosition,yPosition,width,height);
         this.setBackground(new Color(colorRGB[0], colorRGB[1], colorRGB[2]));
         this.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 20));
