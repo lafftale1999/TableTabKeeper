@@ -19,9 +19,4 @@ public class BorderButton extends JButton{
         this.setText(name);
         this.setFocusable(false);
     }
-
-    @Override
-    public void setName(String name) {
-        super.setName(name);
-    }
 }

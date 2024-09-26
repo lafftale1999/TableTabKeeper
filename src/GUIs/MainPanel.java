@@ -12,12 +12,6 @@ import classes.Table;
 
 public class MainPanel extends JPanel{
 
-    private ArrayList<Table> listOfTables = new ArrayList<Table>();
-
-    public MainPanel(){
-        
-    }
-
     public MainPanel(int xPosition, int yPosition, int width, int height, int[] colorRGB, boolean hasBorder){
         this.setBounds(xPosition,yPosition,width,height);
         this.setBackground(new Color(colorRGB[0], colorRGB[1], colorRGB[2]));
@@ -30,14 +24,6 @@ public class MainPanel extends JPanel{
         }
 
         
-    }
-
-    public void setListOfTables(Table component){
-        listOfTables.add(component);
-    }
-
-    public ArrayList<Table> getListOfTables(){
-        return listOfTables;
     }
 
     public void drawTable(Table[] listOfTables){
@@ -64,5 +50,18 @@ public class MainPanel extends JPanel{
         this.setVisible(true);
         this.revalidate();
 
+    }
+
+    public void drawMenuOptions(ArrayList<BorderButton>listOfButtons){
+        
+        this.removeAll();
+
+        for (BorderButton button : listOfButtons){
+            this.add(button);
+        }
+
+        this.setVisible(true);
+        this.revalidate();
+    
     }
 }

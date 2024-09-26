@@ -62,8 +62,6 @@ public class ViewTables extends JPanel{
                 }
             });
         }
-
-
     }
 
     public void drawViewTables(){

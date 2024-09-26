@@ -6,6 +6,7 @@ import GUIs.MyFrame;
 import GUIs.SideBottomPanel;
 import GUIs.SidePanel;
 import GUIs.MainPanel;
+import LayersView.ViewTab;
 import LayersView.ViewTables;
 import classes.MenuItems;
 
@@ -32,6 +33,7 @@ public class App {
         BottomPanel bottomPanel = new BottomPanel(0, mainPanel.getHeight(), frame.getWidth() - sideBottomPanel.getWidth(), frame.getHeight() - mainPanel.getHeight(), bottomPanelColor, true, menuItems);
 
         ViewTables viewTables = new ViewTables(frame, mainPanel, sidePanel, bottomPanel, sideBottomPanel, null);
+        
         
         viewTables.drawViewTables();
 
