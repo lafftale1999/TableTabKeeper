@@ -4,7 +4,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
 
-import GUIs.MainPanel;
+import GUIs.buttons.*;
+import GUIs.panels.*;
 
 public class Table extends JRadioButton{
 
@@ -16,7 +17,7 @@ public class Table extends JRadioButton{
     private boolean hasTab;
     private int tableId;
     private OpenTab activeTab;
-    private GUIs.MainPanel tablePanel;
+    private MainPanel tablePanel;
 
     // -------------- CONSTRUCTOR --------------
 

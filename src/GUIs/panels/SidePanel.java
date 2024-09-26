@@ -1,4 +1,4 @@
-package GUIs;
+package GUIs.panels;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -80,7 +80,6 @@ public class SidePanel extends JPanel{
         headlinePanel.setLayout(new FlowLayout(FlowLayout.LEADING, 0,0));
         headlinePanel.setPreferredSize(new Dimension(this.getWidth(), 50));
         headlinePanel.setBackground(this.getBackground());
-        
         
         JLabel headlineInformation = new JLabel();
         headlineInformation.setFont(new Font(null, Font.BOLD, 16));

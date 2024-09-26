@@ -1,7 +1,7 @@
 package classes;
 
-import GUIs.BorderButton;
-import GUIs.SidePanel;
+import GUIs.buttons.*;
+import GUIs.panels.*;
 import java.util.ArrayList;
 
 public class MenuItems {
@@ -225,5 +225,5 @@ public class MenuItems {
     }
 
     // --------------- COPY METHODS ----------------------
-    
+
 }

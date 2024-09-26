@@ -1,11 +1,8 @@
 package mainPackage;
 
+import GUIs.panels.*;
+import GUIs.frames.*;
 
-import GUIs.BottomPanel;
-import GUIs.MyFrame;
-import GUIs.SideBottomPanel;
-import GUIs.SidePanel;
-import GUIs.MainPanel;
 import LayersView.ViewTab;
 import LayersView.ViewTables;
 import classes.MenuItems;
@@ -32,8 +29,11 @@ public class App {
         
         BottomPanel bottomPanel = new BottomPanel(0, mainPanel.getHeight(), frame.getWidth() - sideBottomPanel.getWidth(), frame.getHeight() - mainPanel.getHeight(), bottomPanelColor, true, menuItems);
 
-        ViewTables viewTables = new ViewTables(frame, mainPanel, sidePanel, bottomPanel, sideBottomPanel, null);
+        ViewTables viewTables = new ViewTables(frame, mainPanel, sidePanel, bottomPanel, sideBottomPanel);
         
+        ViewTab viewTab = new ViewTab(menuItems, null, viewTables, mainPanel, sidePanel, sideBottomPanel, bottomPanel);
+        viewTables.setNextLayer(viewTab);
+        viewTables.addCreateTabListener();
         
         viewTables.drawViewTables();
 

@@ -2,7 +2,8 @@ package LayersView;
 
 import javax.swing.JPanel;
 
-import GUIs.*;
+import GUIs.buttons.*;
+import GUIs.panels.*;
 
 import classes.*;
 import java.util.ArrayList;
@@ -14,7 +15,9 @@ public class ViewTab extends JPanel{
         // nextLayer payment
         private OpenTab activeTab;
         private Table activeTable;
-        private String clickedButton;
+        private String clickedButton = "menu";
+        private String previousClickedButton = "";
+        private int chosenAmount = 1;
 
         // panels
         MainPanel mainPanel;
@@ -34,7 +37,6 @@ public class ViewTab extends JPanel{
            
             setMenuItems(menuItems);
             setActiveTable(activeTable);
-            this.activeTab = activeTable.getActiveTab();
             setPreviousLayer(previousLayer);
             setMainPanel(mainPanel);
             setSidePanel(sidePanel);
@@ -46,19 +48,59 @@ public class ViewTab extends JPanel{
             addListenersToButtons(menuItems.getButtonListOfDessertProducts());
             addListenersToButtons(menuItems.getButtonListOfDrinkProducts());
             addListenersToButtons(menuItems.getButtonListOfHeadlines());
+
+            bottomPanel.getIncreaseButton().addActionListener(e -> {
+                if (clickedButton.length() > 0 && previousClickedButton.length() > 0) {
+                    chosenAmount++;
+                    bottomPanel.createAddProductPanel(activeTable, clickedButton, chosenAmount);
+                }
+            });
+
+            bottomPanel.getDecreaseButton().addActionListener(e -> {
+                if (clickedButton.length() > 0 && previousClickedButton.length() > 0 && chosenAmount != 0) {
+                    chosenAmount--;
+                    bottomPanel.createAddProductPanel(activeTable, clickedButton, chosenAmount);
+                }
+            });
+
+            bottomPanel.getAddButton().addActionListener(e -> {
+                activeTab.addMenuItem(findItem(clickedButton, previousClickedButton), chosenAmount);
+                clickedButton = "";
+                previousClickedButton = "";
+                chosenAmount = 1;
+
+                decideMainPanelLayer();
+                bottomPanel.createAddProductPanel(activeTable);
+                sidePanel.createContainerForActiveTab(activeTab, activeTable);
+
+            });
+
+            bottomPanel.getBackButton().addActionListener(e -> {
+                clickedButton = "menu";
+                previousClickedButton = "";
+                chosenAmount = 1;
+
+                previousLayer.drawViewTables();
+            });
+
+            bottomPanel.getPayButton().addActionListener(e -> {
+                System.out.println("You have paid!");
+            });
         }
 
         public void drawViewTab(){
+            
             // passa in this som argument för tillgång till det aktuella metoderna
             
             // drawmethod för huvudmenyknappar - MAINPANEL
             // drawmethod för underkategorier - MAINPANEL
-            decideNextAction();
+            decideMainPanelLayer();
             
             // drawmethod för kvittot i sidebar
             sidePanel.createContainerForActiveTab(activeTab, activeTable);
 
             // drawmethod för att lägga till [ PRODUKTNAMN ] [Amount ] [ - ][ + ] [ Add ]
+            bottomPanel.createAddProductPanel(activeTable);
 
             // drawmethod för kvittototal och momsberäkning
 
@@ -69,14 +111,53 @@ public class ViewTab extends JPanel{
             for (BorderButton button : list) {
                 button.addActionListener(e -> {
                     System.out.println("You have clicked " + button.getText());
+                    previousClickedButton = clickedButton;
                     clickedButton = button.getText();
-                    decideNextAction();
+                    decideMainPanelLayer();
                 });
             }
         }
 
+        public MenuItems findItem(String name, String menu){
+
+            if (menu.equalsIgnoreCase("entrees")) {
+                for (MenuItems product : menuItems.getListOfEntreeProducts()){
+                    if (name.equalsIgnoreCase(product.getName())){
+                        return product;
+                    }
+                }
+            }
+
+            else if(menu.equalsIgnoreCase("main courses")) {
+                for (MenuItems product : menuItems.getListOfCourseProducts()){
+                    if (name.equalsIgnoreCase(product.getName())){
+                        return product;
+                    }
+                }
+            }
+
+            else if(menu.equalsIgnoreCase("desserts")) {
+                for (MenuItems product : menuItems.getListOfDessertProducts()){
+                    if (name.equalsIgnoreCase(product.getName())){
+                        return product;
+                    }
+                }
+            }
+
+            else if(menu.equalsIgnoreCase("drinks")) {
+                for (MenuItems product : menuItems.getListOfDrinksProducts()){
+                    if (name.equalsIgnoreCase(product.getName())){
+                        return product;
+                    }
+                }
+            }
+            
+            return null;
+
+        }
+
         // metod för att avgöra vad som ska göras härnäst
-        public void decideNextAction(){
+        public void decideMainPanelLayer(){
 
             if (clickedButton.equalsIgnoreCase("entrees"))
                 mainPanel.drawMenuOptions(menuItems.getButtonListOfEntreeProducts());
@@ -85,14 +166,22 @@ public class ViewTab extends JPanel{
                 mainPanel.drawMenuOptions(menuItems.getButtonListOfCourseProducts());
 
             else if (clickedButton.equalsIgnoreCase("desserts"))
-            mainPanel.drawMenuOptions(menuItems.getButtonListOfDessertProducts());
+                mainPanel.drawMenuOptions(menuItems.getButtonListOfDessertProducts());
         
             else if (clickedButton.equalsIgnoreCase("drinks"))
-            mainPanel.drawMenuOptions(menuItems.getButtonListOfDrinkProducts());
+                mainPanel.drawMenuOptions(menuItems.getButtonListOfDrinkProducts());
 
-            else
+            else if (clickedButton.equalsIgnoreCase("menu"))
                 mainPanel.drawMenuOptions(menuItems.getButtonListOfHeadlines());
+
+            // If the user have clicked an item that they want to add
+            else
+                bottomPanel.createAddProductPanel(activeTable, clickedButton, chosenAmount);
+                
+        }
             
+        public String debugPrint(){
+            return "ViewTAB";
         }
 
 

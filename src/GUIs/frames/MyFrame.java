@@ -1,4 +1,4 @@
-package GUIs;
+package GUIs.frames;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 

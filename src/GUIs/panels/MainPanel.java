@@ -1,4 +1,4 @@
-package GUIs;
+package GUIs.panels;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 import classes.Table;
+import GUIs.buttons.*;
 
 public class MainPanel extends JPanel{
 

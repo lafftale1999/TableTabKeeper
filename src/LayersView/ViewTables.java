@@ -3,7 +3,9 @@ package LayersView;
 import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 
-import GUIs.*;
+import GUIs.buttons.*;
+import GUIs.panels.*;
+import GUIs.frames.*;
 
 import classes.OpenTab;
 import classes.Table;
@@ -21,25 +23,12 @@ public class ViewTables extends JPanel{
     private Table[] listOfTables = new Table[5];
     private ButtonGroup tableButtonGroup = new ButtonGroup();
 
-    public ViewTables(MyFrame frame, MainPanel mainPanel, SidePanel sidePanel, BottomPanel bottomPanel, SideBottomPanel sideBottomPanel, ViewTab nextLayer){
+    public ViewTables(MyFrame frame, MainPanel mainPanel, SidePanel sidePanel, BottomPanel bottomPanel, SideBottomPanel sideBottomPanel){
         setBottomPanel(bottomPanel);
         setMainPanel(mainPanel);
         setSidePanel(sidePanel);
         setSideBottomPanel(sideBottomPanel);
         setFrame(frame);
-        this.nextLayer = nextLayer;
-        
-
-        bottomPanel.getTabButton().addActionListener(e -> {
-            // see open tab
-            if (bottomPanel.getCurrentTable().getHasTab()){
-                
-            }
-            // create new tab
-            else {
-                bottomPanel.getCurrentTable().setActiveTab(new OpenTab(bottomPanel.getCurrentTable(), bottomPanel.getMenuItems()));
-            }
-        });
 
         // show transactions
         bottomPanel.getTransactionButton().addActionListener(e -> {
@@ -64,13 +53,30 @@ public class ViewTables extends JPanel{
         }
     }
 
+    public void addCreateTabListener(){
+        bottomPanel.getTabButton().addActionListener(e -> {
+            // see open tab
+            if (!bottomPanel.getCurrentTable().getHasTab()){
+                bottomPanel.getCurrentTable().setActiveTab(new OpenTab(bottomPanel.getCurrentTable(), bottomPanel.getMenuItems()));
+            }
+
+            nextLayer.setActiveTab(bottomPanel.getCurrentTable().getActiveTab());
+            nextLayer.drawViewTab();
+        });
+    }
+
     public void drawViewTables(){
-        
+
         frame.add(mainPanel);
         frame.add(sidePanel);
         frame.add(sideBottomPanel);
         frame.add(bottomPanel);
         
+        mainPanel.removeAll();
+        sidePanel.removeAll();
+        bottomPanel.removeAll();
+        sideBottomPanel.removeAll();
+
         mainPanel.drawTable(listOfTables);
         sidePanel.createContainerForTables(listOfTables);
         bottomPanel.createInformationBodyBottom();
@@ -96,5 +102,9 @@ public class ViewTables extends JPanel{
 
     public void setFrame(MyFrame frame) {
         this.frame = frame;
+    }
+
+    public void setNextLayer(ViewTab nextLayer) {
+        this.nextLayer = nextLayer;
     }
 }

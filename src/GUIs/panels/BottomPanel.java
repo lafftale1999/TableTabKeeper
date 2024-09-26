@@ -1,4 +1,4 @@
-package GUIs;
+package GUIs.panels;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -7,22 +7,32 @@ import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.util.ArrayList;
 import javax.swing.border.Border;
 import java.text.NumberFormat;
 
+import GUIs.buttons.*;
 import classes.Table;
 import classes.MenuItems;
+import classes.OpenTab;
 
 public class BottomPanel extends JPanel{
     
     private ArrayList<JPanel> listOfPanels = new ArrayList<JPanel>();
+    
     private FilledButton tabButton = new FilledButton();
     private BorderButton transactionButton = new BorderButton("Transactions");
     private FilledButton payButton = new FilledButton();
     private BorderButton backButton = new BorderButton("Go Back");
+
+    private FunctionButton increaseButton = new FunctionButton(20,20,"+");
+    private FunctionButton decreaseButton = new FunctionButton(increaseButton.getWidth(), increaseButton.getHeight(), "-");
+    private BorderButton addButton = new BorderButton("Add");
+
     private MenuItems menuItems;
     private Table currentTable;
 
@@ -37,6 +47,10 @@ public class BottomPanel extends JPanel{
             Border border = BorderFactory.createLineBorder(Color.DARK_GRAY, 1);
             this.setBorder(border);
         }
+
+        addButton = new BorderButton("Add");
+        addButton.setPreferredSize(new Dimension(200,20));
+        addButton.setFont(new Font(null, Font.BOLD, 12));
     }
 
     // ------------------------- VIEW TABLES ----------------------------
@@ -47,13 +61,24 @@ public class BottomPanel extends JPanel{
          */
         JPanel newPanel = new JPanel();
         newPanel.setLayout(new GridLayout(2,1,0,5));
-        newPanel.setPreferredSize(new Dimension(this.getWidth() - 10, 50));
+        newPanel.setPreferredSize(new Dimension(this.getWidth(), 50));
         newPanel.setBackground(this.getBackground());
         newPanel.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
 
         return newPanel;
     }
     
+    public void clearListOfPanels(){
+        if (listOfPanels.size() > 0) {
+            for (JPanel panel : listOfPanels) {
+                this.remove(panel);
+            }
+            listOfPanels.clear();
+            this.setVisible(true);
+            this.revalidate();
+        }
+    }
+
     public void createInformationBodyBottom(Table table){
         /**
          * Creates a panel containting two labels. A title and description. Calls the function create buttons
@@ -63,14 +88,9 @@ public class BottomPanel extends JPanel{
 
          // checks if the panel list contains any objects. if so, removes the panels from the container
          // clears the list and reset the panel.
-        if (listOfPanels.size() > 0) {
-            for (JPanel panel : listOfPanels) {
-                this.remove(panel);
-            }
-            listOfPanels.clear();
-            this.setVisible(true);
-            this.revalidate();
-        }
+        
+
+        clearListOfPanels();
 
         // Creates newPanel to save title and description labels in
         JPanel newPanel = createInformationPanel();
@@ -107,14 +127,7 @@ public class BottomPanel extends JPanel{
         
         // checks if the panel list contains any objects. if so, removes the panels from the container
         // clears the list and reset the panel.
-        if (listOfPanels.size() > 0) {
-            for (JPanel panel : listOfPanels) {
-                this.remove(panel);
-            }
-            listOfPanels.clear();
-            this.setVisible(true);
-            this.revalidate();
-        }
+        clearListOfPanels();
 
         // Creates newPanel to save title and description labels in
         JPanel newPanel = createInformationPanel();
@@ -202,6 +215,126 @@ public class BottomPanel extends JPanel{
         drawBottomPanel();
     }
 
+    public void createButtonsBottomPanel(Table activeTable, OpenTab activeTab){
+        /** Creates newPanel and two buttons. One for the selected table and one for opening transactions.
+         * Adds these buttons to newPanel and calls the drawBottomPanel() function.
+         * 
+         * @param Table table is the selected table the user is looking at.
+         */
+
+        // creates a newPanel to add all buttons to
+        JPanel newPanel = createButtonPanel();
+        
+        // updates the currentTable so the ActionListeners are looking at the correct table
+        newPanel.add(backButton);
+
+        // logic for writing out the button text
+        if (activeTab.getListOfMenuItems().size() > 0)
+            tabButton.setText("Pay Tab");
+            newPanel.add(tabButton);
+
+        // adds newPanel to listOfPanels
+        listOfPanels.add(newPanel);
+        
+        // calls the method for drawing out the bottompanel
+        drawBottomPanel();
+    }
+
+    // -------------------- VIEW TAB ----------------------------
+
+    public JPanel createPanelForAddProduct(){
+        /** Creates a panel to store labels in
+         * 
+         * return; newPanel to store labels in.
+         */
+        JPanel newPanel = new JPanel();
+        newPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 2,2));
+        newPanel.setPreferredSize(new Dimension(this.getWidth(), 20));
+        newPanel.setBackground(this.getBackground());
+
+        return newPanel;
+    }
+
+    public JTextField createTextBox(int width){
+        JTextField textField = new JTextField();
+        textField.setPreferredSize(new Dimension(width,20));
+        textField.setBackground(Color.WHITE);
+        textField.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+        textField.setFont(new Font(null, Font.PLAIN, 12));
+        textField.setEditable(false);
+    
+        return textField;
+    }
+
+    public void addToListOfPanels(JPanel newPanel, 
+    JTextField textField, 
+    JTextField amountField, 
+    FunctionButton increaseButton, 
+    FunctionButton decreaseButton, 
+    BorderButton addButton){
+        
+        newPanel.add(textField);
+        newPanel.add(amountField);
+        newPanel.add(increaseButton);
+        newPanel.add(decreaseButton);
+        newPanel.add(addButton);
+    }
+
+
+    public void createAddProductPanel(Table activeTable){
+        JPanel titlePanel = createPanelForAddProduct();
+        JLabel titleText = new JLabel();
+        titleText.setText(" Table " + activeTable.getTableId());
+        titleText.setFont(new Font(null, Font.BOLD, 16));
+
+        titlePanel.add(titleText);
+
+        JPanel newPanel = createPanelForAddProduct();
+
+        // 1 textbox
+        JTextField textField = createTextBox(400);
+
+        // 2 amount
+        JTextField amountField = createTextBox(50);
+
+        addToListOfPanels(newPanel, textField, amountField, increaseButton, decreaseButton, addButton);
+
+        listOfPanels.add(titlePanel);
+        listOfPanels.add(newPanel);
+    }
+
+    //OVERLOADED
+    public void createAddProductPanel(Table activeTable, String productName, int amount){
+        // 5 labels
+        JPanel titlePanel = createPanelForAddProduct();
+        JLabel titleText = new JLabel();
+        titleText.setText("Table " + activeTable.getTableId());
+        titleText.setFont(new Font(null, Font.BOLD, 16));
+
+        titlePanel.add(titleText);
+
+        JPanel newPanel = createPanelForAddProduct();
+
+        // 1 textbox
+        JTextField textField = createTextBox(400);
+        textField.setText(productName);
+
+        // 2 amount
+        JTextField amountField = createTextBox(50);
+        amountField.setText(Integer.toString(amount));
+
+        addToListOfPanels(newPanel, textField, amountField, increaseButton, decreaseButton, addButton);
+
+        listOfPanels.add(titlePanel);
+        listOfPanels.add(newPanel);
+
+        listOfPanels.add(titlePanel);
+        listOfPanels.add(newPanel);
+
+        createButtonsBottomPanel(activeTable, activeTable.getActiveTab());
+    }
+
+    // -------------------- DRAW ----------------------------
     public void drawBottomPanel(){
         /**Method to draw out the bottomPanel. This is the result from
          * 1. calling createInformationBodyBottom which adds title and description labels to a panel and adds panel to listOfPanels
@@ -219,6 +352,7 @@ public class BottomPanel extends JPanel{
         this.setVisible(true);
         this.revalidate();
     }
+
 
     // -------------SETTERS------------------
     public void setCurrentTable(Table currentTable) {
@@ -252,5 +386,17 @@ public class BottomPanel extends JPanel{
 
     public Table getCurrentTable() {
         return currentTable;
+    }
+
+    public JButton getIncreaseButton() {
+        return increaseButton;
+    }
+
+    public JButton getDecreaseButton() {
+        return decreaseButton;
+    }
+
+    public BorderButton getAddButton() {
+        return addButton;
     }
 }

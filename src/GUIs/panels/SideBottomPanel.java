@@ -1,4 +1,4 @@
-package GUIs;
+package GUIs.panels;
 
 import java.awt.Color;
 import java.awt.FlowLayout;

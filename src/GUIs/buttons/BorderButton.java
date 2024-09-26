@@ -1,4 +1,4 @@
-package GUIs;
+package GUIs.buttons;
 
 import javax.swing.JButton;
 import java.awt.Font;
