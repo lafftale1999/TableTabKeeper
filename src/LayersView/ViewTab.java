@@ -7,6 +7,7 @@ import GUIs.panels.*;
 
 import classes.*;
 import java.util.ArrayList;
+import java.awt.event.ActionListener;
 
 
 public class ViewTab extends JPanel{
@@ -48,7 +49,43 @@ public class ViewTab extends JPanel{
             addListenersToButtons(menuItems.getButtonListOfDessertProducts());
             addListenersToButtons(menuItems.getButtonListOfDrinkProducts());
             addListenersToButtons(menuItems.getButtonListOfHeadlines());
+            
+            bottomPanel.getBackButton().addActionListener(e -> {
+                clickedButton = "menu";
+                previousClickedButton = "";
+                chosenAmount = 1;
 
+                previousLayer.drawViewTables();
+            });
+
+            bottomPanel.getPayButton().addActionListener(e -> {
+                System.out.println("You have paid!");
+            });
+
+        }
+        
+        public void resetListeners() {
+            
+            // reset listeners
+            if (bottomPanel.getIncreaseButton().getActionListeners().length > 0){
+                for (ActionListener al : bottomPanel.getIncreaseButton().getActionListeners()) {
+                    bottomPanel.getIncreaseButton().removeActionListener(al);
+                }
+            }
+
+            if (bottomPanel.getDecreaseButton().getActionListeners().length > 0){
+                for (ActionListener al : bottomPanel.getDecreaseButton().getActionListeners()) {
+                    bottomPanel.getDecreaseButton().removeActionListener(al);
+                }
+            }
+
+            if (bottomPanel.getAddButton().getActionListeners().length > 0){
+                for (ActionListener al : bottomPanel.getAddButton().getActionListeners()) {
+                    bottomPanel.getAddButton().removeActionListener(al);
+                }
+            }
+
+            // add new listeners
             bottomPanel.getIncreaseButton().addActionListener(e -> {
                 if (clickedButton.length() > 0 && previousClickedButton.length() > 0) {
                     chosenAmount++;
@@ -73,18 +110,6 @@ public class ViewTab extends JPanel{
                 bottomPanel.createAddProductPanel(activeTable);
                 sidePanel.createContainerForActiveTab(activeTab, activeTable);
 
-            });
-
-            bottomPanel.getBackButton().addActionListener(e -> {
-                clickedButton = "menu";
-                previousClickedButton = "";
-                chosenAmount = 1;
-
-                previousLayer.drawViewTables();
-            });
-
-            bottomPanel.getPayButton().addActionListener(e -> {
-                System.out.println("You have paid!");
             });
         }
 

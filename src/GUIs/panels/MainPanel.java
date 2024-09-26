@@ -50,6 +50,7 @@ public class MainPanel extends JPanel{
 
         this.setVisible(true);
         this.revalidate();
+        this.repaint();
 
     }
 
@@ -63,6 +64,7 @@ public class MainPanel extends JPanel{
 
         this.setVisible(true);
         this.revalidate();
+        this.repaint();
     
     }
 }

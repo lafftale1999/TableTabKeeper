@@ -301,6 +301,8 @@ public class BottomPanel extends JPanel{
 
         listOfPanels.add(titlePanel);
         listOfPanels.add(newPanel);
+
+        createButtonsBottomPanel(activeTable, activeTable.getActiveTab());
     }
 
     //OVERLOADED
@@ -351,6 +353,7 @@ public class BottomPanel extends JPanel{
         // to ensure that it gets drawn properly
         this.setVisible(true);
         this.revalidate();
+        this.repaint();
     }
 
 

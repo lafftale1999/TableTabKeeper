@@ -4,7 +4,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
 
-import GUIs.buttons.*;
 import GUIs.panels.*;
 
 public class Table extends JRadioButton{

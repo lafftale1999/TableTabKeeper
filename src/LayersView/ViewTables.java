@@ -61,6 +61,9 @@ public class ViewTables extends JPanel{
             }
 
             nextLayer.setActiveTab(bottomPanel.getCurrentTable().getActiveTab());
+            nextLayer.setActiveTable(bottomPanel.getCurrentTable());
+            
+            nextLayer.resetListeners();
             nextLayer.drawViewTab();
         });
     }
