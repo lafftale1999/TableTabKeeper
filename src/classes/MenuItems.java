@@ -44,36 +44,10 @@ public class MenuItems {
     }
 
     public MenuItems(){
-        /* createEntreesProducts();
-        createMainCourseProducts();
-        createDessertCourseProducts();
-        createDrinkProducts();
-        createHeadlines(); */
-
         createProducts(listOfEntreeProducts, buttonListOfEntreeProducts, "Entrees.txt");
         createProducts(listOfCourseProducts, buttonListOfCourseProducts, "MainCourse.txt");
         createProducts(listOfDessertProducts, buttonListOfDessertProducts, "Desserts.txt");
         createProducts(listOfDrinkProducts, buttonListOfDrinkProducts, "Drinks.txt");
-
-        for (String title : listOfHeadlines){
-            System.out.println(title.equalsIgnoreCase("desserts"));
-        }
-
-        for (MenuItems product : listOfEntreeProducts){
-            System.out.println(product.getName());
-        }
-
-        for (MenuItems product : listOfCourseProducts){
-            System.out.println(product.getName());
-        }
-
-        for (MenuItems product : listOfDessertProducts){
-            System.out.println(product.getName());
-        }
-
-        for (MenuItems product : listOfDrinkProducts){
-            System.out.println(product.getName());
-        }
     }
 
     public MenuItems(String name, float price, int amount, String typeOfProduct, int productId, float taxGroup){
@@ -103,11 +77,12 @@ public class MenuItems {
                 String name = listOfStrings[0].trim();
                 float price = Float.parseFloat(listOfStrings[1].trim());
                 float taxGroup = Float.parseFloat(listOfStrings[2].trim());
-
                 list.add(new MenuItems(price, name, 1, productType, taxGroup));
                 listOfButtons.add(new BorderButton(name));
             }
+
             scanner.close();
+
         }
 
         catch (FileNotFoundException e){
@@ -117,68 +92,6 @@ public class MenuItems {
         listOfHeadlines.add(productType);
         buttonListOfHeadlines.add(new BorderButton(productType));
     }
-
-    /* private void createEntreesProducts(){
-        float[] priceList = {79.00f, 119.00f, 59.00f, 89.00f, 249.00f};
-        String[] nameList = {"Gazpacho", "Sardines & Toast", "Caprese Salad", "Oysters n3","Skagen Toast"};
-        float[] taxGroupList = {0.12f, 0.12f, 0.12f, 0.12f, 0.12f};
-
-        if (priceList.length == nameList.length) {
-            for (int i = 0; i < priceList.length; i++){
-                listOfEntreeProducts.add(new MenuItems(priceList[i], nameList[i], 1, "Entree", taxGroupList[i]));
-                buttonListOfEntreeProducts.add(new BorderButton(listOfEntreeProducts.get(i).getName()));
-            }
-        }
-    }
-
-    private void createMainCourseProducts(){
-
-        float[] priceList = {39.00f, 78.00f, 93.00f, 123.00f, 189.00f};
-        String[] nameList = {"Ricebowl", "Sallad", "Chicken", "Salmon","Meat"};
-        float[] taxGroupList = {0.12f, 0.12f, 0.12f, 0.12f, 0.12f};
-
-        if (priceList.length == nameList.length) {
-            for (int i = 0; i < priceList.length; i++){
-                listOfCourseProducts.add(new MenuItems(priceList[i], nameList[i], 1, "Main", taxGroupList[i]));
-                buttonListOfCourseProducts.add(new BorderButton(listOfCourseProducts.get(i).getName()));
-            }
-        }
-    }
-
-    private void createDessertCourseProducts(){
-        float[] priceList = {69.00f, 78.00f, 59.00f, 250.00f, 999.00f};
-        String[] nameList = {"Ice Cream", "Tiramisu", "Mudcake", "Cheese platter","Goldpainted Chocolate"};
-        float[] taxGroupList = {0.12f, 0.12f, 0.12f, 0.12f, 0.12f};
-
-        if (priceList.length == nameList.length) {
-            for (int i = 0; i < priceList.length; i++){
-                listOfDessertProducts.add(new MenuItems(priceList[i], nameList[i], 1, "Dessert", taxGroupList[i]));
-                buttonListOfDessertProducts.add(new BorderButton(listOfDessertProducts.get(i).getName()));
-            }
-        }
-    }
-
-    private void createDrinkProducts(){
-        float[] priceList = {24.00f, 33.00f, 39.00f, 29.00f, 55.00f, 129.00f, 89.00f};
-        String[] nameList = {"Soda", "Lemonade", "Ice Tea", "Light Soda","Milkshake", "Wine", "Beer"};
-        float[] taxGroupList = {0.12f, 0.12f, 0.12f, 0.12f, 0.12f, 0.25f, 0.25f};
-
-        if (priceList.length == nameList.length) {
-            for (int i = 0; i < priceList.length; i++){
-                listOfDrinkProducts.add(new MenuItems(priceList[i], nameList[i], 1, "Drink",taxGroupList[i]));
-                buttonListOfDrinkProducts.add(new BorderButton(listOfDrinkProducts.get(i).getName()));
-            }
-        }
-    }
-
-    private void createHeadlines(){
-        String[] headlines = {"Entrees", "Main Courses", "Desserts", "Drinks"};
-
-        for (String headline : headlines) {
-            listOfHeadlines.add(headline);
-            buttonListOfHeadlines.add(new BorderButton(headline));
-        }
-    } */
 
     // -------------- GETTERS --------------
 

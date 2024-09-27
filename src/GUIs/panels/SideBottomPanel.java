@@ -47,6 +47,8 @@ public class SideBottomPanel extends JPanel{
         this.revalidate();
 
         float[] taxList = activeTab.calculateTaxes();
+        System.out.println("12% " + taxList[0]);
+        System.out.println("25% " + taxList[1]);
 
         JLabel totalTitelText = createLabel();
         totalTitelText.setText("Tab total: " + NumberFormat.getCurrencyInstance().format(activeTab.getTabTotal()));
@@ -86,9 +88,9 @@ public class SideBottomPanel extends JPanel{
             if (table.getHasTab()) {
                 float[] taxList = table.getActiveTab().calculateTaxes();
                 totalTabsAmount += table.getActiveTab().getTabTotal();
-                totalTaxAmount = taxList[0] + taxList[1];
-                total12taxAmount = taxList [0];
-                total25taxAmount = taxList [1];
+                totalTaxAmount += taxList[0] + taxList[1];
+                total12taxAmount += taxList [0];
+                total25taxAmount += taxList [1];
             }
             
         }

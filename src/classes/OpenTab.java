@@ -55,10 +55,12 @@ public class OpenTab {
         for (MenuItems product : this.listOfMenuItems){
             if (product.getTaxGroup() == 0.25f){
                 listOfTaxes[1] += (product.getPrice() * product.getAmount()) * 0.25f;
+                System.out.println(listOfTaxes[1]);
             }
         
             else {
-                listOfTaxes[0] = (product.getPrice() * product.getAmount()) * 0.12f;
+                listOfTaxes[0] += (product.getPrice() * product.getAmount()) * 0.12f;
+                System.out.println(listOfTaxes[0]);
             }
         }
 

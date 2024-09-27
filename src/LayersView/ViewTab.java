@@ -99,8 +99,6 @@ public class ViewTab extends JPanel{
                     clickedButton = button.getText();
                     decideMainPanelLayer();
                 });
-
-                System.out.println(button.getText() + " has been added");
             }
         }
 
@@ -157,14 +155,9 @@ public class ViewTab extends JPanel{
             else if (clickedButton.equalsIgnoreCase("drinks"))
                 mainPanel.drawMenuOptions(menuItems.getButtonListOfDrinkProducts(), "");
 
-            else if (clickedButton.equalsIgnoreCase("menu")){
-                System.out.println("-----------------ABOUT TO DRAW THE MENU------------------");
-                System.out.println(menuItems.getButtonListOfHeadlines());
+            else if (clickedButton.equalsIgnoreCase("menu"))
                 mainPanel.drawMenuOptions(menuItems.getButtonListOfHeadlines(), "menu");
-                System.out.println("-----------------MENU HAS BEEN DRAWN------------------");
-            }
                 
-
             // If the user have clicked an item that they want to add
             else
                 bottomPanel.createAddProductPanel(activeTable, clickedButton, chosenAmount);      
