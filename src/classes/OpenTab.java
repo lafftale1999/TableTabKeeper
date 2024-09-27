@@ -24,7 +24,6 @@ public class OpenTab {
         this.tabTotal += amount;
     }
 
-    // KOLLA OM DENNA BLIR ETT NYTT OBJEKT ELLER OM DET PEKAR MOT SAMMA.
     public void addMenuItem(MenuItems product, int amount){
         MenuItems newMenuItem = new MenuItems(product.getName(), product.getPrice(), amount, product.getTypeOfProduct(), product.getProductId(), product.getTaxGroup());
         listOfMenuItems.add(newMenuItem);

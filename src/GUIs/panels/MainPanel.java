@@ -13,6 +13,8 @@ import GUIs.buttons.*;
 
 public class MainPanel extends JPanel{
 
+    private BorderButton backMenuButton = new BorderButton("<-- BACK");
+
     public MainPanel(int xPosition, int yPosition, int width, int height, int[] colorRGB, boolean hasBorder){
         this.setBounds(xPosition,yPosition,width,height);
         this.setBackground(new Color(colorRGB[0], colorRGB[1], colorRGB[2]));
@@ -54,7 +56,7 @@ public class MainPanel extends JPanel{
 
     }
 
-    public void drawMenuOptions(ArrayList<BorderButton>listOfButtons){
+    public void drawMenuOptions(ArrayList<BorderButton>listOfButtons, String menuLayer){
         
         this.removeAll();
 
@@ -62,9 +64,20 @@ public class MainPanel extends JPanel{
             this.add(button);
         }
 
+        if (!menuLayer.equals("menu"))
+            this.add(backMenuButton);
+
         this.setVisible(true);
         this.revalidate();
         this.repaint();
     
+    }
+
+    public BorderButton getBackMenuButton() {
+        return backMenuButton;
+    }
+
+    public void setBackMenuButton(BorderButton backMenuButton) {
+        this.backMenuButton = backMenuButton;
     }
 }
