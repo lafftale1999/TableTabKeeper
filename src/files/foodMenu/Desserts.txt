@@ -1,0 +1,5 @@
+Ice Cream, 69, 0.12,
+Tiramisu, 78, 0.12,
+Mudcake, 59, 0.12,
+Cheese platter, 250, 0.12,
+Goldpainted Chocolate, 999, 0.12,

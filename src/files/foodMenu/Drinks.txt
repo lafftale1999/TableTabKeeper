@@ -1,0 +1,7 @@
+Soda, 24, 0.12,
+Lemonade, 33, 0.12,
+Ice Tea, 29, 0.12
+Light Soda, 29, 0.12,
+Milkshake, 55, 0.12,
+Wine, 129, 0.25,
+Beer, 89, 0.25,

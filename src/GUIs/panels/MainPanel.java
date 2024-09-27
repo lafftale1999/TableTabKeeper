@@ -60,6 +60,7 @@ public class MainPanel extends JPanel{
 
         for (BorderButton button : listOfButtons){
             this.add(button);
+            System.out.println(button.getText() + " has been added");
         }
 
         if (!menuLayer.equals("menu"))

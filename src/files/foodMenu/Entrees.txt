@@ -1,0 +1,5 @@
+Gazpacho, 79.00, 0.12, 
+Sardines & Toast, 119, 0.12,
+Caprese Salad, 59, 0.12,
+Oysters n3, 89, 0.12,
+Skagen Toast, 249, 0.12,
