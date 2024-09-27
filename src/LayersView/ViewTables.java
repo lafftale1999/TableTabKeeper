@@ -50,6 +50,7 @@ public class ViewTables extends JPanel{
                     mainPanel.drawTable(listOfTables);
                     bottomPanel.createInformationBodyBottom(table);
                     sidePanel.createContainerForTables(listOfTables);
+                    sideBottomPanel.drawTabTotal(listOfTables);
                 }
             });
         }
@@ -65,12 +66,7 @@ public class ViewTables extends JPanel{
             // see open tab
             if (!bottomPanel.getCurrentTable().getHasTab()){
                 bottomPanel.getCurrentTable().setActiveTab(new OpenTab(bottomPanel.getCurrentTable(), bottomPanel.getMenuItems()));
-                System.out.println("ACTIVE TAB CREATED: " + bottomPanel.getCurrentTable().getActiveTab().getTabId());
-                System.out.println("ACTIVE TABLE CREATED: " + bottomPanel.getCurrentTable().getTableId());
             }
-
-            System.out.println("ACTIVE TAB BEFORE SETTING NEXT LAYER: " + bottomPanel.getCurrentTable().getActiveTab().getTabId());
-            System.out.println("ACTIVE TABLE BEFORE SETTING NEXT LAYER: " + bottomPanel.getCurrentTable().getTableId());
 
             nextLayer.setActiveTable(bottomPanel.getCurrentTable());
             nextLayer.setActiveTab(bottomPanel.getCurrentTable().getActiveTab());
@@ -95,6 +91,7 @@ public class ViewTables extends JPanel{
         mainPanel.drawTable(listOfTables);
         sidePanel.createContainerForTables(listOfTables);
         bottomPanel.createInformationBodyBottom();
+        sideBottomPanel.drawTabTotal(listOfTables);
 
     }
 

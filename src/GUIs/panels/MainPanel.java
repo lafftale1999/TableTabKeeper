@@ -38,12 +38,10 @@ public class MainPanel extends JPanel{
 
             if (table.getHasTab()){
                 table.setIcon(table.getOpenTabTableIcon());
-                System.out.println("OPEN Table drawn");
             }
 
             else if (!table.getHasTab()){
                 table.setIcon(table.getEmptyTableIcon());
-                System.out.println("EMPTY Table drawn");
             }
 
             this.add(table);

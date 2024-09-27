@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 import GUIs.buttons.FunctionButton;
+import LayersView.ViewTab;
 
 import java.text.NumberFormat;
 
@@ -23,6 +24,7 @@ import classes.Table;
 public class SidePanel extends JPanel{
 
     private ArrayList<JPanel> listOfPanels = new ArrayList<JPanel>();
+    private SideBottomPanel sideBottomPanel;
     
 
     public SidePanel(int xPosition, int yPosition, int width, int height, int[] colorRGB, boolean hasBorder){
@@ -120,8 +122,11 @@ public class SidePanel extends JPanel{
                 
                 FunctionButton removeButton = new FunctionButton(40, 20, "-");
                 removeButton.addActionListener(e -> {
-                   // if (activeTab.getListOfMenuItems().size() < 1)
+                    System.out.println("Tab before removal: " + activeTab.getTabTotal() + "kr | " + activeTab.getListOfMenuItems().size()); 
                     activeTab.removeMenuItem(product);
+                    System.out.println("Tab after removal: " + activeTab.getTabTotal() + "kr | " + activeTab.getListOfMenuItems().size());
+                    
+                    sideBottomPanel.drawTabTotal(activeTab);
                     createContainerForActiveTab(activeTab, activeTable);
                 });
                 
@@ -139,7 +144,7 @@ public class SidePanel extends JPanel{
                 
                 float totalProductPrice = product.getAmount() * product.getPrice();
                 
-                productInformation.setText(product.getAmount() + "x | " + product.getName() + " | " + NumberFormat.getCurrencyInstance().format(totalProductPrice));
+                productInformation.setText(product.getAmount() + "x " + product.getName() + " | " + NumberFormat.getCurrencyInstance().format(totalProductPrice));
 
                 newPanel.add(productInformation);
                 newPanel.add(removeButton);
@@ -163,4 +168,11 @@ public class SidePanel extends JPanel{
         this.repaint();
     }
 
+    public SideBottomPanel getSideBottomPanel() {
+        return sideBottomPanel;
+    }
+
+    public void setSideBottomPanel(SideBottomPanel sideBottomPanel) {
+        this.sideBottomPanel = sideBottomPanel;
+    }
 }

@@ -227,9 +227,12 @@ public class BottomPanel extends JPanel{
         newPanel.add(backButton);
 
         // logic for writing out the button text
-        if (activeTab.getListOfMenuItems().size() > 0)
+        if (activeTab.getListOfMenuItems().size() == 0)
+            tabButton.setText("Close Tab");
+        else
             tabButton.setText("Pay Tab");
-            newPanel.add(tabButton);
+
+        newPanel.add(tabButton);
 
         // adds newPanel to listOfPanels
         listOfPanels.add(newPanel);

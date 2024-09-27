@@ -35,10 +35,12 @@ public class OpenTab {
         for (int i = 0; i < listOfMenuItems.size(); i++){
             if (itemToRemove.equals(listOfMenuItems.get(i))){
                 if (listOfMenuItems.get(i).getAmount() > 1) {
+                    tabTotal -= listOfMenuItems.get(i).getPrice();
                     listOfMenuItems.get(i).setAmount(listOfMenuItems.get(i).getAmount() - 1);
                 }
 
                 else {
+                    tabTotal -= listOfMenuItems.get(i).getPrice();
                     listOfMenuItems.remove(i);
                 }
             }

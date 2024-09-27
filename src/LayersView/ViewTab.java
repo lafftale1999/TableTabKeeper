@@ -55,6 +55,7 @@ public class ViewTab extends JPanel{
                 previousClickedButton = "";
                 chosenAmount = 1;
 
+
                 previousLayer.drawViewTables();
             });
 
@@ -115,7 +116,8 @@ public class ViewTab extends JPanel{
                 decideMainPanelLayer();
                 bottomPanel.createAddProductPanel(activeTable);
                 sidePanel.createContainerForActiveTab(activeTab, activeTable);
-
+                sideBottomPanel.drawTabTotal(activeTab);
+                System.out.println("Tab when calling draw from viewTab: " + activeTab.getTabTotal() + "kr | " + activeTab.getListOfMenuItems().size()); 
             });
         }
 
@@ -133,13 +135,14 @@ public class ViewTab extends JPanel{
             bottomPanel.createAddProductPanel(activeTable);
 
             // drawmethod för kvittototal och momsberäkning
+            sideBottomPanel.drawTabTotal(activeTab);
 
         }
 
         public void addListenersToButtons(ArrayList<BorderButton> list){
             for (BorderButton button : list) {
                 button.addActionListener(e -> {
-                    System.out.println("You have clicked " + button.getText());
+                    chosenAmount = 1;
                     previousClickedButton = clickedButton;
                     clickedButton = button.getText();
                     decideMainPanelLayer();

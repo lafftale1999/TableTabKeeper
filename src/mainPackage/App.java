@@ -28,8 +28,8 @@ public class App {
         SideBottomPanel sideBottomPanel = new SideBottomPanel(sidePanel.getX(), sidePanel.getHeight(), sidePanel.getWidth(), frame.getHeight() - sidePanel.getHeight(), bottomPanelColor, true);
         
         BottomPanel bottomPanel = new BottomPanel(0, mainPanel.getHeight(), frame.getWidth() - sideBottomPanel.getWidth(), frame.getHeight() - mainPanel.getHeight(), bottomPanelColor, true, menuItems);
+        sidePanel.setSideBottomPanel(sideBottomPanel);
 
-        
         ViewTables viewTables = new ViewTables(frame, mainPanel, sidePanel, bottomPanel, sideBottomPanel);
         
         ViewTab viewTab = new ViewTab(menuItems, null, viewTables, mainPanel, sidePanel, sideBottomPanel, bottomPanel);
