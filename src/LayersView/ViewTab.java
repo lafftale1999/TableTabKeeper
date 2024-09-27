@@ -94,7 +94,7 @@ public class ViewTab extends JPanel{
             });
 
             bottomPanel.getDecreaseButton().addActionListener(e -> {
-                if (clickedButton.length() > 0 && previousClickedButton.length() > 0 && chosenAmount != 0) {
+                if (clickedButton.length() > 0 && previousClickedButton.length() > 0 && chosenAmount > 1) {
                     chosenAmount--;
                     bottomPanel.createAddProductPanel(activeTable, clickedButton, chosenAmount);
                 }
@@ -102,7 +102,7 @@ public class ViewTab extends JPanel{
 
             bottomPanel.getAddButton().addActionListener(e -> {
                 activeTab.addMenuItem(findItem(clickedButton, previousClickedButton), chosenAmount);
-                clickedButton = "";
+                clickedButton = "menu";
                 previousClickedButton = "";
                 chosenAmount = 1;
 
@@ -114,8 +114,9 @@ public class ViewTab extends JPanel{
         }
 
         public void drawViewTab(){
-            
             // passa in this som argument för tillgång till det aktuella metoderna
+            System.out.println("ACTIVE TAB FOR VIEWTAB: " + this.activeTab.getTabId());
+            System.out.println("ACTIVE TABLE FOR VIEWTAB: " + this.activeTable.getTableId());
             
             // drawmethod för huvudmenyknappar - MAINPANEL
             // drawmethod för underkategorier - MAINPANEL

@@ -1,5 +1,7 @@
 package LayersView;
 
+import java.awt.event.ActionListener;
+
 import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 
@@ -53,15 +55,25 @@ public class ViewTables extends JPanel{
         }
     }
 
-    public void addCreateTabListener(){
+    public void addTabButtonListener(){
+        
+        for (ActionListener al : bottomPanel.getTabButton().getActionListeners()) {
+            bottomPanel.getTabButton().removeActionListener(al);
+        }
+        
         bottomPanel.getTabButton().addActionListener(e -> {
             // see open tab
             if (!bottomPanel.getCurrentTable().getHasTab()){
                 bottomPanel.getCurrentTable().setActiveTab(new OpenTab(bottomPanel.getCurrentTable(), bottomPanel.getMenuItems()));
+                System.out.println("ACTIVE TAB CREATED: " + bottomPanel.getCurrentTable().getActiveTab().getTabId());
+                System.out.println("ACTIVE TABLE CREATED: " + bottomPanel.getCurrentTable().getTableId());
             }
 
-            nextLayer.setActiveTab(bottomPanel.getCurrentTable().getActiveTab());
+            System.out.println("ACTIVE TAB BEFORE SETTING NEXT LAYER: " + bottomPanel.getCurrentTable().getActiveTab().getTabId());
+            System.out.println("ACTIVE TABLE BEFORE SETTING NEXT LAYER: " + bottomPanel.getCurrentTable().getTableId());
+
             nextLayer.setActiveTable(bottomPanel.getCurrentTable());
+            nextLayer.setActiveTab(bottomPanel.getCurrentTable().getActiveTab());
             
             nextLayer.resetListeners();
             nextLayer.drawViewTab();

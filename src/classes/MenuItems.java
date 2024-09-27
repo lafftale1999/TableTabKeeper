@@ -99,7 +99,7 @@ public class MenuItems {
     }
 
     private void createDrinkProducts(){
-        float[] priceList = {24.00f, 33.00f, 39.00f, 29.00f, 55.00f};
+        float[] priceList = {24.00f, 33.00f, 39.00f, 29.00f, 55.00f, 129.00f, 89.00f};
         String[] nameList = {"Soda", "Lemonade", "Ice Tea", "Light Soda","Milkshake", "Wine", "Beer"};
         float[] taxGroupList = {0.12f, 0.12f, 0.12f, 0.12f, 0.12f, 0.25f, 0.25f};;
 

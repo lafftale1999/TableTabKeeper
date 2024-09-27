@@ -11,6 +11,9 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
+
+import GUIs.buttons.FunctionButton;
+
 import java.text.NumberFormat;
 
 import classes.MenuItems;
@@ -20,6 +23,7 @@ import classes.Table;
 public class SidePanel extends JPanel{
 
     private ArrayList<JPanel> listOfPanels = new ArrayList<JPanel>();
+    
 
     public SidePanel(int xPosition, int yPosition, int width, int height, int[] colorRGB, boolean hasBorder){
         this.setBounds(xPosition,yPosition,width,height);
@@ -80,17 +84,16 @@ public class SidePanel extends JPanel{
         clearPanels();
 
         JPanel headlinePanel = new JPanel();
-        headlinePanel.setLayout(new FlowLayout(FlowLayout.LEADING, 0,10));
-        headlinePanel.setPreferredSize(new Dimension(this.getWidth(), 50));
+        headlinePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0,10));
+        headlinePanel.setPreferredSize(new Dimension(this.getWidth() -20 , 30));
         headlinePanel.setBackground(this.getBackground());
 
         this.revalidate();
         
         JLabel headlineInformation = new JLabel();
         headlineInformation.setFont(new Font(null, Font.BOLD, 16));
-        // headlineInformation.setPreferredSize(new Dimension(headlinePanel.getWidth(),headlinePanel.getHeight()));
 
-        headlineInformation.setText("Table " + activeTable.getTableId());
+        headlineInformation.setText("Table " + activeTable.getTableId() + " | " + "Tab: " + activeTable.getActiveTab().getTabId());
 
         headlinePanel.add(headlineInformation);
         listOfPanels.add(headlinePanel);
@@ -100,34 +103,38 @@ public class SidePanel extends JPanel{
                 
                 JPanel newPanel = new JPanel();
                 newPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 0,0));
-                //newPanel.setPreferredSize(new Dimension(this.getWidth(), 50));
                 newPanel.setBackground(this.getBackground());
                 
                 
                 JLabel productInformation = new JLabel();
                 productInformation.setFont(font);
-                // productInformation.setPreferredSize(new Dimension(newPanel.getWidth(),newPanel.getHeight()));
                 productInformation.setForeground(Color.BLACK);
                 productInformation.setText("No products added yet");
 
                 newPanel.add(productInformation);
                 listOfPanels.add(newPanel);
-                System.out.println("NO PRODUCTS ADDED YET");
         }
 
         else {
             for (MenuItems product : activeTab.getListOfMenuItems()) {
+                
+                FunctionButton removeButton = new FunctionButton(40, 20, "-");
+                removeButton.addActionListener(e -> {
+                   // if (activeTab.getListOfMenuItems().size() < 1)
+                    activeTab.removeMenuItem(product);
+                    createContainerForActiveTab(activeTab, activeTable);
+                });
+                
                 Font font = new Font(null, Font.PLAIN, 12);
                 
                 JPanel newPanel = new JPanel();
-                newPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 0,0));
-                // newPanel.setPreferredSize(new Dimension(this.getWidth(), 50));
+                newPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
                 newPanel.setBackground(this.getBackground());
                 
                 
                 JLabel productInformation = new JLabel();
                 productInformation.setFont(font);
-                // productInformation.setPreferredSize(new Dimension(newPanel.getWidth(),newPanel.getHeight()));
+                productInformation.setPreferredSize(new Dimension(this.getWidth() - 100, 20));
                 productInformation.setForeground(Color.BLACK);
                 
                 float totalProductPrice = product.getAmount() * product.getPrice();
@@ -135,14 +142,13 @@ public class SidePanel extends JPanel{
                 productInformation.setText(product.getAmount() + "x | " + product.getName() + " | " + NumberFormat.getCurrencyInstance().format(totalProductPrice));
 
                 newPanel.add(productInformation);
+                newPanel.add(removeButton);
     
                 listOfPanels.add(newPanel);
-                System.out.println("WE DO HAVE SOME PRODUCTS :D");
             }
         }
 
         drawSidePanel();
-        System.out.println("SidePanel has been drawn");
 
     }
 

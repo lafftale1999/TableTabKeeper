@@ -10,7 +10,7 @@ public class FunctionButton extends JButton{
     public FunctionButton(int width, int height, String name){
         this.setFocusable(false);
         this.setPreferredSize( new Dimension(width, height));
-        this.setFont(new Font("Verdana", Font.PLAIN,16));
+        this.setFont(new Font("Verdana", Font.PLAIN,12));
         this.setText(name);
     }
 

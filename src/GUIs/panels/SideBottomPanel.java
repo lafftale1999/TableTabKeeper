@@ -7,6 +7,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
+import classes.OpenTab;
+
 public class SideBottomPanel extends JPanel{
 
     public SideBottomPanel(int xPosition, int yPosition, int width, int height, int[] colorRGB, boolean hasBorder){
@@ -19,5 +21,11 @@ public class SideBottomPanel extends JPanel{
             Border border = BorderFactory.createLineBorder(Color.DARK_GRAY, 1);
             this.setBorder(border);
         }
+    }
+
+    public void drawTabTotal(OpenTab activeTab){
+
+        
+
     }
 }

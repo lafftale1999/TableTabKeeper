@@ -1,5 +1,6 @@
 package classes;
 
+import java.awt.Menu;
 import java.util.ArrayList;
 
 public class OpenTab {
@@ -9,11 +10,12 @@ public class OpenTab {
     private int tabId = 0;
     private float tabTotal = 0;
     private boolean isPaid = false;
+    private static int tabCounter = 0;
     
     public OpenTab(Table table, MenuItems menuItems){
-        tabId++;
+        tabCounter++;
         setMenuItems(menuItems);
-        setTabId(tabId);
+        setTabId(tabCounter);
         table.setActiveTab(this);
         table.setHasTab(true);
     }
@@ -29,11 +31,27 @@ public class OpenTab {
         updateTabTotal(newMenuItem.getAmount() * newMenuItem.getPrice());
     }
 
+    public void removeMenuItem(MenuItems itemToRemove){
+
+        for (int i = 0; i < listOfMenuItems.size(); i++){
+            if (itemToRemove.equals(listOfMenuItems.get(i))){
+                if (listOfMenuItems.get(i).getAmount() > 1) {
+                    listOfMenuItems.get(i).setAmount(listOfMenuItems.get(i).getAmount() - 1);
+                }
+
+                else {
+                    listOfMenuItems.remove(i);
+                }
+            }
+        }
+
+    }
+
     public float[] calculateTaxes(){
 
         float[] listOfTaxes = new float[2];
     
-        for (MenuItems product : listOfMenuItems){
+        for (MenuItems product : this.listOfMenuItems){
             if (product.getTaxGroup() == 0.25f){
                 listOfTaxes[1] += (product.getPrice() * product.getAmount()) * 0.25f;
             }

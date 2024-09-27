@@ -23,14 +23,14 @@ import classes.OpenTab;
 public class BottomPanel extends JPanel{
     
     private ArrayList<JPanel> listOfPanels = new ArrayList<JPanel>();
-    
+    private int bottomComponentsHeight = 30;
     private FilledButton tabButton = new FilledButton();
     private BorderButton transactionButton = new BorderButton("Transactions");
     private FilledButton payButton = new FilledButton();
     private BorderButton backButton = new BorderButton("Go Back");
 
-    private FunctionButton increaseButton = new FunctionButton(20,20,"+");
-    private FunctionButton decreaseButton = new FunctionButton(increaseButton.getWidth(), increaseButton.getHeight(), "-");
+    private FunctionButton increaseButton = new FunctionButton(75,bottomComponentsHeight," + ");
+    private FunctionButton decreaseButton = new FunctionButton(75, bottomComponentsHeight, " - ");
     private BorderButton addButton = new BorderButton("Add");
 
     private MenuItems menuItems;
@@ -49,7 +49,7 @@ public class BottomPanel extends JPanel{
         }
 
         addButton = new BorderButton("Add");
-        addButton.setPreferredSize(new Dimension(200,20));
+        addButton.setPreferredSize(new Dimension(150,bottomComponentsHeight));
         addButton.setFont(new Font(null, Font.BOLD, 12));
     }
 
@@ -63,7 +63,6 @@ public class BottomPanel extends JPanel{
         newPanel.setLayout(new GridLayout(2,1,0,5));
         newPanel.setPreferredSize(new Dimension(this.getWidth(), 50));
         newPanel.setBackground(this.getBackground());
-        newPanel.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
 
         return newPanel;
     }
@@ -158,10 +157,9 @@ public class BottomPanel extends JPanel{
          * return; panel that are used to store buttons in.
         */
         JPanel newPanel = new JPanel();
-        newPanel.setLayout(new FlowLayout(FlowLayout.CENTER,0,20));
-        newPanel.setPreferredSize(new Dimension(this.getWidth() - 10, 50));
+        newPanel.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
+        newPanel.setPreferredSize(new Dimension(this.getWidth() - 10, 40));
         newPanel.setBackground(this.getBackground());
-        newPanel.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
 
         return newPanel;
     }
@@ -248,8 +246,8 @@ public class BottomPanel extends JPanel{
          * return; newPanel to store labels in.
          */
         JPanel newPanel = new JPanel();
-        newPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 2,2));
-        newPanel.setPreferredSize(new Dimension(this.getWidth(), 20));
+        newPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 2,10));
+        newPanel.setPreferredSize(new Dimension(this.getWidth(), bottomComponentsHeight));
         newPanel.setBackground(this.getBackground());
 
         return newPanel;
@@ -257,7 +255,7 @@ public class BottomPanel extends JPanel{
 
     public JTextField createTextBox(int width){
         JTextField textField = new JTextField();
-        textField.setPreferredSize(new Dimension(width,20));
+        textField.setPreferredSize(new Dimension(width,bottomComponentsHeight));
         textField.setBackground(Color.WHITE);
         textField.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
         textField.setFont(new Font(null, Font.PLAIN, 12));
@@ -268,20 +266,19 @@ public class BottomPanel extends JPanel{
 
     public void addToListOfPanels(JPanel newPanel, 
     JTextField textField, 
-    JTextField amountField, 
-    FunctionButton increaseButton, 
-    FunctionButton decreaseButton, 
-    BorderButton addButton){
+    JTextField amountField){
         
         newPanel.add(textField);
         newPanel.add(amountField);
-        newPanel.add(increaseButton);
         newPanel.add(decreaseButton);
+        newPanel.add(increaseButton);
         newPanel.add(addButton);
     }
 
 
     public void createAddProductPanel(Table activeTable){
+        clearListOfPanels();
+        
         JPanel titlePanel = createPanelForAddProduct();
         JLabel titleText = new JLabel();
         titleText.setText(" Table " + activeTable.getTableId());
@@ -292,12 +289,12 @@ public class BottomPanel extends JPanel{
         JPanel newPanel = createPanelForAddProduct();
 
         // 1 textbox
-        JTextField textField = createTextBox(400);
+        JTextField textField = createTextBox(300);
 
         // 2 amount
         JTextField amountField = createTextBox(50);
 
-        addToListOfPanels(newPanel, textField, amountField, increaseButton, decreaseButton, addButton);
+        addToListOfPanels(newPanel, textField, amountField);
 
         listOfPanels.add(titlePanel);
         listOfPanels.add(newPanel);
@@ -307,6 +304,9 @@ public class BottomPanel extends JPanel{
 
     //OVERLOADED
     public void createAddProductPanel(Table activeTable, String productName, int amount){
+        
+        clearListOfPanels();
+        
         // 5 labels
         JPanel titlePanel = createPanelForAddProduct();
         JLabel titleText = new JLabel();
@@ -318,14 +318,14 @@ public class BottomPanel extends JPanel{
         JPanel newPanel = createPanelForAddProduct();
 
         // 1 textbox
-        JTextField textField = createTextBox(400);
+        JTextField textField = createTextBox(300);
         textField.setText(productName);
 
         // 2 amount
         JTextField amountField = createTextBox(50);
         amountField.setText(Integer.toString(amount));
 
-        addToListOfPanels(newPanel, textField, amountField, increaseButton, decreaseButton, addButton);
+        addToListOfPanels(newPanel, textField, amountField);
 
         listOfPanels.add(titlePanel);
         listOfPanels.add(newPanel);

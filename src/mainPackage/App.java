@@ -33,7 +33,7 @@ public class App {
         
         ViewTab viewTab = new ViewTab(menuItems, null, viewTables, mainPanel, sidePanel, sideBottomPanel, bottomPanel);
         viewTables.setNextLayer(viewTab);
-        viewTables.addCreateTabListener();
+        viewTables.addTabButtonListener();
         
         viewTables.drawViewTables();
 
