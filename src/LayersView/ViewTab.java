@@ -13,7 +13,6 @@ import java.awt.event.ActionListener;
 public class ViewTab extends JPanel{
 
         private ViewTables previousLayer;
-        // nextLayer payment
         private OpenTab activeTab;
         private Table activeTable;
         private String clickedButton = "menu";

@@ -1,12 +1,9 @@
 package GUIs.panels;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.text.NumberFormat;
-import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -95,7 +92,6 @@ public class SideBottomPanel extends JPanel{
             
         }
         
-
         JLabel totalTitelText = createLabel();
         totalTitelText.setText("Tab total: " + NumberFormat.getCurrencyInstance().format(totalTabsAmount));
         totalTitelText.setFont(new Font(null, Font.BOLD, 16));

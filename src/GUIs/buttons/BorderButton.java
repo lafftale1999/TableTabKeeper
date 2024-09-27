@@ -8,8 +8,6 @@ import javax.swing.BorderFactory;
 
 public class BorderButton extends JButton{
 
-    private String name;
-
     public BorderButton(String name){
         this.setBorder(BorderFactory.createLineBorder(new Color(0x00507A), 2));
         this.setBackground(Color.WHITE);

@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 import GUIs.buttons.FunctionButton;
-import LayersView.ViewTab;
 
 import java.text.NumberFormat;
 
@@ -125,7 +124,7 @@ public class SidePanel extends JPanel{
                     System.out.println("Tab before removal: " + activeTab.getTabTotal() + "kr | " + activeTab.getListOfMenuItems().size()); 
                     activeTab.removeMenuItem(product);
                     System.out.println("Tab after removal: " + activeTab.getTabTotal() + "kr | " + activeTab.getListOfMenuItems().size());
-                    
+
                     sideBottomPanel.drawTabTotal(activeTab);
                     createContainerForActiveTab(activeTab, activeTable);
                 });

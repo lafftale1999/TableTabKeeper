@@ -1,6 +1,5 @@
 package classes;
 
-import java.awt.Menu;
 import java.util.ArrayList;
 
 public class OpenTab {
@@ -9,7 +8,6 @@ public class OpenTab {
     private ArrayList<MenuItems> listOfMenuItems = new ArrayList<MenuItems>();
     private int tabId = 0;
     private float tabTotal = 0;
-    private boolean isPaid = false;
     private static int tabCounter = 0;
     
     public OpenTab(Table table, MenuItems menuItems){
