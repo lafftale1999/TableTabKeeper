@@ -16,7 +16,7 @@ public class Table extends JRadioButton{
     private boolean hasTab;
     private int tableId;
     private OpenTab activeTab;
-    private MainPanel tablePanel;
+    private MainPanel mainPanel;
 
     // -------------- CONSTRUCTOR --------------
 
@@ -24,7 +24,7 @@ public class Table extends JRadioButton{
 
         setHasTab(hasTab);
         setTableId(tableId);
-        setTablePanel(tablePanel);
+        setMainPanel(mainPanel);
         
         // load images for table logic
         emptyTableImage = new ImageIcon("src/images/EmptyTable.png");
@@ -49,6 +49,18 @@ public class Table extends JRadioButton{
         mainPanel.revalidate();
     }
 
+    public void removeTab(){
+        
+        if (this.activeTab != null) {
+            this.activeTab = null;
+            this.hasTab = false;
+        }
+
+        else 
+            System.out.println("No active tabs for Table " + this.tableId);
+        
+    }
+
 
     // -------------- SETTERS --------------
     public void setHasTab(boolean hasTab) {
@@ -63,8 +75,8 @@ public class Table extends JRadioButton{
         this.activeTab = tab;
     }
 
-    public void setTablePanel(MainPanel parentFrame) {
-        this.tablePanel = parentFrame;
+    public void setMainPanel(MainPanel parentFrame) {
+        this.mainPanel = parentFrame;
     }
 
     // -------------- GETTERS --------------
@@ -81,7 +93,7 @@ public class Table extends JRadioButton{
     }
 
     public MainPanel getTablePanel() {
-        return tablePanel;
+        return mainPanel;
     }
     
     public ImageIcon getEmptyTableIcon(){

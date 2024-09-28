@@ -24,6 +24,7 @@ public class SidePanel extends JPanel{
 
     private ArrayList<JPanel> listOfPanels = new ArrayList<JPanel>();
     private SideBottomPanel sideBottomPanel;
+    private BottomPanel bottomPanel;
     
 
     public SidePanel(int xPosition, int yPosition, int width, int height, int[] colorRGB, boolean hasBorder){
@@ -66,7 +67,8 @@ public class SidePanel extends JPanel{
             tableTabTotal.setPreferredSize(new Dimension(this.getWidth(), newPanel.getHeight() / 2));
             
             tableNumberTitle.setText("Table " + table.getTableId());
-            if (!table.getHasTab())
+
+            if (table.getActiveTab() == null)
                 tableTabTotal.setText("No open tab");
             else
                 tableTabTotal.setText("Total: " + NumberFormat.getCurrencyInstance().format(table.getActiveTab().getTabTotal()));
@@ -121,11 +123,10 @@ public class SidePanel extends JPanel{
                 
                 FunctionButton removeButton = new FunctionButton(40, 20, "-");
                 removeButton.addActionListener(e -> {
-                    System.out.println("Tab before removal: " + activeTab.getTabTotal() + "kr | " + activeTab.getListOfMenuItems().size()); 
                     activeTab.removeMenuItem(product);
-                    System.out.println("Tab after removal: " + activeTab.getTabTotal() + "kr | " + activeTab.getListOfMenuItems().size());
 
                     sideBottomPanel.drawTabTotal(activeTab);
+                    bottomPanel.createAddProductPanel(activeTable);
                     createContainerForActiveTab(activeTab, activeTable);
                 });
                 
@@ -173,5 +174,9 @@ public class SidePanel extends JPanel{
 
     public void setSideBottomPanel(SideBottomPanel sideBottomPanel) {
         this.sideBottomPanel = sideBottomPanel;
+    }
+
+    public void setBottomPanel(BottomPanel bottomPanel) {
+        this.bottomPanel = bottomPanel;
     }
 }

@@ -26,14 +26,14 @@ public class ViewPayment {
         setBottomPanel(bottomPanel);
         setSideBottomPanel(sideBottomPanel);
 
-        
+        // reset all actionlisteners from back button and pay button
     }
 
     public void newPayment(OpenTab activeTab, Table activeTable){
         
         setActiveTab(activeTab);
         setActiveTable(activeTable);
-        
+
         Payment activePayment = new Payment(activeTab, activeTable);
 
         for (BorderButton button : activePayment.getButtonsListOfPaymentOptions()){

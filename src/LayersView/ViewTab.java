@@ -54,13 +54,10 @@ public class ViewTab extends JPanel{
                 previousClickedButton = "";
                 chosenAmount = 1;
 
-
                 previousLayer.drawViewTables();
             });
 
-            bottomPanel.getPayButton().addActionListener(e -> {
-                System.out.println("You have paid!");
-            });
+            
 
             mainPanel.getBackMenuButton().addActionListener(e -> {
                 clickedButton = "menu";
@@ -142,20 +139,30 @@ public class ViewTab extends JPanel{
         // metod för att avgöra vad som ska göras härnäst
         public void decideMainPanelLayer(){
 
-            if (clickedButton.equalsIgnoreCase("entrees"))
+            if (clickedButton.equalsIgnoreCase("entrees")){
                 mainPanel.drawMenuOptions(menuItems.getButtonListOfEntreeProducts(),"");
-            
-            else if (clickedButton.equalsIgnoreCase("maincourse"))
+                bottomPanel.createAddProductPanel(activeTable);
+            }
+
+            else if (clickedButton.equalsIgnoreCase("maincourse")){
                 mainPanel.drawMenuOptions(menuItems.getButtonListOfCourseProducts(), "");
+                bottomPanel.createAddProductPanel(activeTable);
+            }
 
-            else if (clickedButton.equalsIgnoreCase("desserts"))
+            else if (clickedButton.equalsIgnoreCase("desserts")){
                 mainPanel.drawMenuOptions(menuItems.getButtonListOfDessertProducts(), "");
-        
-            else if (clickedButton.equalsIgnoreCase("drinks"))
+                bottomPanel.createAddProductPanel(activeTable);
+            }
+            else if (clickedButton.equalsIgnoreCase("drinks")){
                 mainPanel.drawMenuOptions(menuItems.getButtonListOfDrinkProducts(), "");
+                bottomPanel.createAddProductPanel(activeTable);
+            }
 
-            else if (clickedButton.equalsIgnoreCase("menu"))
+            else if (clickedButton.equalsIgnoreCase("menu")){
                 mainPanel.drawMenuOptions(menuItems.getButtonListOfHeadlines(), "menu");
+                bottomPanel.createAddProductPanel(activeTable);
+            }
+                
                 
             // If the user have clicked an item that they want to add
             else
@@ -180,6 +187,12 @@ public class ViewTab extends JPanel{
             if (bottomPanel.getAddButton().getActionListeners().length > 0){
                 for (ActionListener al : bottomPanel.getAddButton().getActionListeners()) {
                     bottomPanel.getAddButton().removeActionListener(al);
+                }
+            }
+
+            if (bottomPanel.getPayButton().getActionListeners().length > 0){
+                for (ActionListener al : bottomPanel.getPayButton().getActionListeners()) {
+                    bottomPanel.getPayButton().removeActionListener(al);
                 }
             }
 
@@ -209,6 +222,21 @@ public class ViewTab extends JPanel{
                 sidePanel.createContainerForActiveTab(activeTab, activeTable);
                 sideBottomPanel.drawTabTotal(activeTab);
                 System.out.println("Tab when calling draw from viewTab: " + activeTab.getTabTotal() + "kr | " + activeTab.getListOfMenuItems().size()); 
+            });
+
+            bottomPanel.getPayButton().addActionListener(e -> {
+
+                if (activeTable.getActiveTab().getListOfMenuItems().size() == 0 && activeTable.getActiveTab() != null){
+                    clickedButton = "menu";
+                    previousClickedButton = "";
+                    chosenAmount = 1;
+
+                    previousLayer.drawViewTables();
+                    
+                }
+                
+                activeTable.removeTab();
+
             });
         }
            
@@ -258,6 +286,13 @@ public class ViewTab extends JPanel{
 
         public BottomPanel getBottomPanel() {
             return bottomPanel;
+        }
+
+        public OpenTab getActiveTab() {
+            return activeTab;
+        }
+        public Table getActiveTable() {
+            return activeTable;
         }
 
 }

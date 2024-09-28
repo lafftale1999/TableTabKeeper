@@ -36,11 +36,11 @@ public class MainPanel extends JPanel{
         for (Table table : listOfTables) {
             this.remove(table);
 
-            if (table.getHasTab()){
+            if (table.getActiveTab() != null){
                 table.setIcon(table.getOpenTabTableIcon());
             }
 
-            else if (!table.getHasTab()){
+            else {
                 table.setIcon(table.getEmptyTableIcon());
             }
 

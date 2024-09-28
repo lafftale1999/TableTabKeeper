@@ -82,7 +82,7 @@ public class SideBottomPanel extends JPanel{
         float total12taxAmount = 0f;
 
         for (Table table : listOfTables) {
-            if (table.getHasTab()) {
+            if (table.getActiveTab() != null) {
                 float[] taxList = table.getActiveTab().calculateTaxes();
                 totalTabsAmount += table.getActiveTab().getTabTotal();
                 totalTaxAmount += taxList[0] + taxList[1];

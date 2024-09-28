@@ -101,7 +101,7 @@ public class BottomPanel extends JPanel{
 
         // create description
         JLabel description = new JLabel();
-        if (table.getHasTab()){
+        if (table.getActiveTab() != null){
             description.setText(NumberFormat.getCurrencyInstance().format(table.getActiveTab().getTabTotal()));
         }
 
@@ -178,7 +178,7 @@ public class BottomPanel extends JPanel{
         setCurrentTable(table);
 
         // logic for writing out the button text
-        if (currentTable.getHasTab())
+        if (currentTable.getActiveTab() != null)
             tabButton.setText("Open Tab");
 
         else
@@ -228,11 +228,11 @@ public class BottomPanel extends JPanel{
 
         // logic for writing out the button text
         if (activeTab.getListOfMenuItems().size() == 0)
-            tabButton.setText("Close Tab");
+            payButton.setText("Close Tab");
         else
-            tabButton.setText("Pay Tab");
+            payButton.setText("Pay Tab");
 
-        newPanel.add(tabButton);
+        newPanel.add(payButton);
 
         // adds newPanel to listOfPanels
         listOfPanels.add(newPanel);
