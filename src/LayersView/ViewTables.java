@@ -69,10 +69,6 @@ public class ViewTables extends JPanel{
 
             nextLayer.setActiveTable(bottomPanel.getCurrentTable());
             nextLayer.setActiveTab(bottomPanel.getCurrentTable().getActiveTab());
-            
-            
-            System.out.println(nextLayer.getActiveTab().getTabId());
-            System.out.println(nextLayer.getActiveTable().getTableId());
 
             nextLayer.resetListeners();
             nextLayer.drawViewTab();
@@ -80,6 +76,11 @@ public class ViewTables extends JPanel{
     }
 
     public void drawViewTables(){
+        
+        for (Table table : listOfTables){
+            System.out.println(table.getTableId() + " is selected: " + table.isSelected());
+        }
+        
         mainPanel.removeAll();
         sidePanel.removeAll();
         bottomPanel.removeAll();
@@ -119,5 +120,9 @@ public class ViewTables extends JPanel{
 
     public void setNextLayer(ViewTab nextLayer) {
         this.nextLayer = nextLayer;
+    }
+
+    public Table[] getListOfTables() {
+        return listOfTables;
     }
 }
