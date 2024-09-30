@@ -10,6 +10,7 @@ import java.util.Scanner;
 import java.util.HashMap;
 
 public class MenuItems {
+    
     private float price;
     private String name;
     private int productId;
@@ -25,6 +26,7 @@ public class MenuItems {
     private ArrayList<String> listOfHeadlines = new ArrayList<>();
     private ArrayList<BorderButton> buttonListOfHeadlines = new ArrayList<>();
 
+    // 
     private MenuItems(float price, String name, int amount, String typeOfProduct, float taxGroup){
         productIdNumberSequence++;
         setPrice(price);
@@ -93,7 +95,6 @@ public class MenuItems {
 
 
     // -------------- GETTERS --------------
-
     public int getAmount() {
         return amount;
     }
@@ -139,7 +140,6 @@ public class MenuItems {
     }
 
     // -------------- SETTERS --------------
-
     public void setAmount(int amount) {
         this.amount = amount;
     }
@@ -179,7 +179,4 @@ public class MenuItems {
     public void setListOfHeadlines(ArrayList<String> listOfHeadlines) {
         this.listOfHeadlines = listOfHeadlines;
     }
-
-    // --------------- COPY METHODS ----------------------
-
 }

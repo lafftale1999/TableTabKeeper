@@ -1,5 +1,8 @@
 # ignore all compiled files
 *.class
 
+# ignore changes to textfiles
+*.txt
+
 # ignore all files in bin
 bin/

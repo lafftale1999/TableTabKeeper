@@ -64,7 +64,7 @@ public class ViewTab extends JPanel{
 
             // drawmethod för att lägga till [ PRODUKTNAMN ] [Amount ] [ - ][ + ] [ Add ]
             // drawmethod för [ Back ] [ Pay ]
-            bottomPanel.createAddProductPanel(activeTable);
+            bottomPanel.createAddProductPanel(activeTable, "", -1);
 
             // drawmethod för kvittototal och momsberäkning
             sideBottomPanel.drawTabTotal(activeTab);
@@ -105,21 +105,18 @@ public class ViewTab extends JPanel{
             }
             
             return null;
-
         }
 
         // metod för att avgöra vad som ska göras härnäst
         public void decideMainPanelLayer(){
             if (clickedButton.equalsIgnoreCase("menu")){
                 mainPanel.drawMenuOptions(menuItems.getButtonListOfHeadlines(), "menu");
-                bottomPanel.createAddProductPanel(activeTable);
-                System.out.println("After painting");
+                bottomPanel.createAddProductPanel(activeTable, "", -1);
             }
 
             else if (menuItems.getListOfProducts().containsKey(clickedButton)) {
                 mainPanel.drawMenuOptions(menuItems.getListOfProducts().get(clickedButton).getButtons(), "");
-                bottomPanel.createAddProductPanel(activeTable);
-                System.out.println("Submenu created");
+                bottomPanel.createAddProductPanel(activeTable, "", -1);
             }
  
             // If the user have clicked an item that they want to add
@@ -182,7 +179,7 @@ public class ViewTab extends JPanel{
                 chosenAmount = 1;
 
                 decideMainPanelLayer();
-                bottomPanel.createAddProductPanel(activeTable);
+                bottomPanel.createAddProductPanel(activeTable,"",-1);
                 sidePanel.createContainerForActiveTab(activeTab, activeTable,"viewtab");
                 sideBottomPanel.drawTabTotal(activeTab);
             });

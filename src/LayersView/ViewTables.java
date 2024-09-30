@@ -93,7 +93,7 @@ public class ViewTables extends JPanel{
 
         mainPanel.drawTable(listOfTables);
         sidePanel.createContainerForTables(listOfTables);
-        bottomPanel.createInformationBodyBottom();
+        bottomPanel.createInformationBodyBottom(null);
         sideBottomPanel.drawTabTotal(listOfTables);
     }
 
