@@ -56,6 +56,8 @@ public class MainPanel extends JPanel{
 
     public void drawMenuOptions(ArrayList<BorderButton>listOfButtons, String menuLayer){
         
+        System.out.println("DURING PAINT");
+        
         this.removeAll();
 
         for (BorderButton button : listOfButtons){
