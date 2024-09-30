@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 public class ViewTab extends JPanel{
 
         private ViewTables previousLayer;
+        private ViewPayment nextLayer;
         private OpenTab activeTab;
         private Table activeTable;
         private String clickedButton = "menu";
@@ -49,16 +50,6 @@ public class ViewTab extends JPanel{
             addListenersToButtons(menuItems.getButtonListOfDrinkProducts());
             addListenersToButtons(menuItems.getButtonListOfHeadlines());
             
-            bottomPanel.getBackButton().addActionListener(e -> {
-                clickedButton = "menu";
-                previousClickedButton = "";
-                chosenAmount = 1;
-
-                previousLayer.drawViewTables();
-            });
-
-            
-
             mainPanel.getBackMenuButton().addActionListener(e -> {
                 clickedButton = "menu";
                 previousClickedButton = "";
@@ -67,8 +58,6 @@ public class ViewTab extends JPanel{
 
         }
         
-        
-
         public void drawViewTab(){
             
             // drawmethod för huvudmenyknappar - MAINPANEL
@@ -76,7 +65,7 @@ public class ViewTab extends JPanel{
             decideMainPanelLayer();
             
             // drawmethod för kvittot i sidePanel
-            sidePanel.createContainerForActiveTab(activeTab, activeTable);
+            sidePanel.createContainerForActiveTab(activeTab, activeTable, "viewtab");
 
             // drawmethod för att lägga till [ PRODUKTNAMN ] [Amount ] [ - ][ + ] [ Add ]
             // drawmethod för [ Back ] [ Pay ]
@@ -85,6 +74,7 @@ public class ViewTab extends JPanel{
             // drawmethod för kvittototal och momsberäkning
             sideBottomPanel.drawTabTotal(activeTab);
 
+            resetListeners();
         }
 
         public void addListenersToButtons(ArrayList<BorderButton> list){
@@ -196,6 +186,12 @@ public class ViewTab extends JPanel{
                 }
             }
 
+            if (bottomPanel.getBackButton().getActionListeners().length > 0){
+                for (ActionListener al : bottomPanel.getBackButton().getActionListeners()) {
+                    bottomPanel.getBackButton().removeActionListener(al);
+                }
+            }
+
             // add new listeners
             bottomPanel.getIncreaseButton().addActionListener(e -> {
                 if (clickedButton.length() > 0 && previousClickedButton.length() > 0) {
@@ -219,25 +215,28 @@ public class ViewTab extends JPanel{
 
                 decideMainPanelLayer();
                 bottomPanel.createAddProductPanel(activeTable);
-                sidePanel.createContainerForActiveTab(activeTab, activeTable);
+                sidePanel.createContainerForActiveTab(activeTab, activeTable,"viewtab");
                 sideBottomPanel.drawTabTotal(activeTab);
-                System.out.println("Tab when calling draw from viewTab: " + activeTab.getTabTotal() + "kr | " + activeTab.getListOfMenuItems().size()); 
             });
 
             bottomPanel.getPayButton().addActionListener(e -> {
 
-                if (activeTable.getActiveTab().getListOfMenuItems().size() == 0 && activeTable.getActiveTab() != null){
-                    clickedButton = "menu";
-                    previousClickedButton = "";
-                    chosenAmount = 1;
+                clickedButton = "menu";
+                previousClickedButton = "";
+                chosenAmount = 1;
 
-                    previousLayer.drawViewTables();
-                    
-                }
-                
-                activeTable.removeTab();
+                nextLayer.checkIncomingTab(activeTable);
 
             });
+
+            bottomPanel.getBackButton().addActionListener(e -> {
+                clickedButton = "menu";
+                previousClickedButton = "";
+                chosenAmount = 1;
+
+                previousLayer.drawViewTables();
+            });
+
         }
            
         public void setActiveTab(OpenTab activeTab) {
@@ -272,6 +271,10 @@ public class ViewTab extends JPanel{
             this.bottomPanel = bottomPanel;
         }
 
+        public void setNextLayer(ViewPayment nextLayer) {
+            this.nextLayer = nextLayer;
+        }
+
         public MainPanel getMainPanel() {
             return mainPanel;
         }
@@ -293,6 +296,10 @@ public class ViewTab extends JPanel{
         }
         public Table getActiveTable() {
             return activeTable;
+        }
+
+        public ViewPayment getNextLayer() {
+            return nextLayer;
         }
 
 }

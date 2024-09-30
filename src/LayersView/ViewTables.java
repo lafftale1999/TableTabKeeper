@@ -33,7 +33,7 @@ public class ViewTables extends JPanel{
 
         // show transactions
         bottomPanel.getTransactionButton().addActionListener(e -> {
-            System.out.println("Open transactions");
+            TransactionFrame transactionFrame = new TransactionFrame();
         });
 
         // create tables and add to arrays/groups

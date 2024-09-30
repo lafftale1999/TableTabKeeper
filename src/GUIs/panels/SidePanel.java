@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 import GUIs.buttons.FunctionButton;
+import LayersView.ViewTables;
 
 import java.text.NumberFormat;
 
@@ -82,7 +83,7 @@ public class SidePanel extends JPanel{
     }
 
     // ------------ METHODS FOR VIEWTAB ------------------
-    public void createContainerForActiveTab(OpenTab activeTab, Table activeTable){
+    public void createContainerForActiveTab(OpenTab activeTab, Table activeTable, String activeLayer){
         
         clearPanels();
 
@@ -121,14 +122,8 @@ public class SidePanel extends JPanel{
         else {
             for (MenuItems product : activeTab.getListOfMenuItems()) {
                 
-                FunctionButton removeButton = new FunctionButton(40, 20, "-");
-                removeButton.addActionListener(e -> {
-                    activeTab.removeMenuItem(product);
-
-                    sideBottomPanel.drawTabTotal(activeTab);
-                    bottomPanel.createAddProductPanel(activeTable);
-                    createContainerForActiveTab(activeTab, activeTable);
-                });
+                
+                
                 
                 Font font = new Font(null, Font.PLAIN, 12);
                 
@@ -147,8 +142,19 @@ public class SidePanel extends JPanel{
                 productInformation.setText(product.getAmount() + "x " + product.getName() + " | " + NumberFormat.getCurrencyInstance().format(totalProductPrice));
 
                 newPanel.add(productInformation);
-                newPanel.add(removeButton);
-    
+                
+                if (activeLayer.equalsIgnoreCase("viewtab")) {
+                    FunctionButton removeButton = new FunctionButton(40, 20, "-");
+                    removeButton.addActionListener(e -> {
+                    activeTab.removeMenuItem(product);
+
+                    sideBottomPanel.drawTabTotal(activeTab);
+                    bottomPanel.createAddProductPanel(activeTable);
+                    createContainerForActiveTab(activeTab, activeTable, activeLayer);
+                });
+                    newPanel.add(removeButton);
+                }
+
                 listOfPanels.add(newPanel);
             }
         }

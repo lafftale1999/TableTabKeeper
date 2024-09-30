@@ -10,6 +10,7 @@ public class Payment {
     
     private OpenTab activeTab;
     private Table activeTable;
+    private String paymentMethod;
     private String[] paymentOptions = {"Cash", "Card", "Giftcard"};
     private int paymentId;
     private String todaysDate;
@@ -43,6 +44,15 @@ public class Payment {
     public int getPaymentId() {
         return paymentId;
     }
+
+    public String getTodaysDate() {
+        return todaysDate;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
     public void setActiveTab(OpenTab activeTab) {
         this.activeTab = activeTab;
     }
@@ -56,23 +66,22 @@ public class Payment {
         this.paymentOptions = paymentOptions;
     }
     public void setPaymentId(int paymentId) {
-        LocalDate today = LocalDate.now();
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMDD");
-
-        int id = Integer.parseInt(today.format(formatter));
-        
-        
-        this.paymentId = id;
+        this.paymentId = paymentId;
     }
 
     public void setTodaysDate() {
         LocalDate today = LocalDate.now();
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-DD");
+        System.out.println(today);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         String todayFormatted = today.format(formatter);
 
         this.todaysDate = todayFormatted;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
     }
 }

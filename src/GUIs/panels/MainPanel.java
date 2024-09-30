@@ -72,6 +72,31 @@ public class MainPanel extends JPanel{
     
     }
 
+    public void drawPaymentOptions(ArrayList<BorderButton>listOfButtons, String selectedButton){
+        
+        this.removeAll();
+
+        for (int i = 0; i < listOfButtons.size(); i++){
+
+            if (listOfButtons.get(i).getText() == selectedButton) {
+                listOfButtons.get(i).setBackground(new Color(0x00507A));
+                listOfButtons.get(i).setForeground(Color.WHITE);
+            }
+
+            else {
+                listOfButtons.get(i).setBackground(Color.WHITE);
+                listOfButtons.get(i).setForeground(new Color(0x00507A));
+            }
+
+            this.add(listOfButtons.get(i));
+        }
+
+        this.setVisible(true);
+        this.revalidate();
+        this.repaint();
+    
+    }
+
     public BorderButton getBackMenuButton() {
         return backMenuButton;
     }

@@ -83,6 +83,10 @@ public class OpenTab {
         return menuItems;
     }
 
+    public static int getTabCounter() {
+        return tabCounter;
+    }
+
     // ----------SETTERS---------------
     public void setListOfMenuItems(ArrayList<MenuItems> listOfMenuItems) {
         this.listOfMenuItems = listOfMenuItems;
@@ -98,5 +102,9 @@ public class OpenTab {
 
     public void setMenuItems(MenuItems menuItems) {
         this.menuItems = menuItems;
+    }
+
+    public static void setTabCounter(int tabCounter) {
+        OpenTab.tabCounter = tabCounter;
     }
 }

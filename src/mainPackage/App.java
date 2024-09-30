@@ -2,10 +2,11 @@ package mainPackage;
 
 import GUIs.panels.*;
 import GUIs.frames.*;
-
+import LayersView.ViewPayment;
 import LayersView.ViewTab;
 import LayersView.ViewTables;
 import classes.MenuItems;
+import classes.Transaction;
 
 public class App {
     
@@ -14,6 +15,8 @@ public class App {
         MyFrame frame = new MyFrame();
         
         MenuItems menuItems = new MenuItems();
+
+        Transaction transactionList = new Transaction();
 
         // backgrounds colors for our panels
         int[] mainPanelColor = {233,233,233};
@@ -36,9 +39,11 @@ public class App {
         ViewTab viewTab = new ViewTab(menuItems, null, viewTables, mainPanel, sidePanel, sideBottomPanel, bottomPanel);
         viewTables.setNextLayer(viewTab);
         viewTables.addTabButtonListener();
-        
+
+        ViewPayment viewPayment = new ViewPayment(viewTab, viewTables, mainPanel, sidePanel, bottomPanel, sideBottomPanel);
+        viewTab.setNextLayer(viewPayment);
+
         viewTables.drawViewTables();
-
-
+        
     }
 }

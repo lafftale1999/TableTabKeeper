@@ -14,6 +14,9 @@ import javax.swing.JLabel;
 import java.util.ArrayList;
 import javax.swing.border.Border;
 import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import GUIs.buttons.*;
 import classes.Table;
@@ -35,6 +38,9 @@ public class BottomPanel extends JPanel{
 
     private MenuItems menuItems;
     private Table currentTable;
+    private DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private LocalDateTime currentTime = LocalDateTime.now();
+    private String timeOfPayment = "";
 
     public BottomPanel(int xPosition, int yPosition, int width, int height, int[] colorRGB, boolean hasBorder, MenuItems menuItems){
         this.setBounds(xPosition,yPosition,width,height);
@@ -60,7 +66,7 @@ public class BottomPanel extends JPanel{
          * return; newPanel to store labels in.
          */
         JPanel newPanel = new JPanel();
-        newPanel.setLayout(new GridLayout(2,1,0,5));
+        newPanel.setLayout(new GridLayout(3,1,0,5));
         newPanel.setPreferredSize(new Dimension(this.getWidth(), 50));
         newPanel.setBackground(this.getBackground());
 
@@ -149,6 +155,51 @@ public class BottomPanel extends JPanel{
 
         // Calls method to create button
         createButtonsBottomPanel();
+    }
+
+    public void createInformationBodyBottom(Table activeTable, String paymentMethod){
+        /**
+         * Creates a panel containting two labels. A title and description. Calls the function create buttons
+         * 
+         * @param Table table for checking logic of which table is selected.
+         */
+
+         // checks if the panel list contains any objects. if so, removes the panels from the container
+         // clears the list and reset the panel.
+        
+        System.out.println("IN METHOD : " + paymentMethod);
+
+        clearListOfPanels();
+
+        currentTime = LocalDateTime.now();
+        
+        // Creates newPanel to save title and description labels in
+        JPanel newPanel = createInformationPanel();
+
+        // create title
+        JLabel title = new JLabel();
+        title.setFont(new Font("Verdana", Font.BOLD, 16));
+        title.setText("Table " + activeTable.getTableId());
+
+        
+        // create description
+        JLabel currentPaymentOption = new JLabel();
+        
+        currentPaymentOption.setText("Payment: " + paymentMethod);
+
+        JLabel dateAndTime = new JLabel();
+        dateAndTime.setText("Date: " + format.format(currentTime));
+        
+        // adds them to the newPanel
+        newPanel.add(title);
+        newPanel.add(currentPaymentOption);
+        newPanel.add(dateAndTime);
+
+        // adds the panel to list of panels to later draw them out
+        listOfPanels.add(newPanel);
+
+        // calls method to create buttons
+        createButtonsBottomPanel(activeTable, activeTable.getActiveTab());
     }
 
     public JPanel createButtonPanel(){

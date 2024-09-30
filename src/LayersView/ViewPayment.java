@@ -2,6 +2,12 @@ package LayersView;
 
 import classes.*;
 import GUIs.panels.*;
+
+import java.awt.event.ActionListener;
+import java.time.LocalDate;
+
+import javax.swing.JOptionPane;
+
 import GUIs.buttons.*;;
 
 public class ViewPayment {
@@ -14,7 +20,7 @@ public class ViewPayment {
     private SidePanel sidePanel;
     private BottomPanel bottomPanel;
     private SideBottomPanel sideBottomPanel;
-    private String paymentMethod;
+    private String paymentMethod = "";
 
 
     public ViewPayment(ViewTab previousLayer, ViewTables nextLayer, MainPanel mainPanel, SidePanel sidePanel, BottomPanel bottomPanel, SideBottomPanel sideBottomPanel){
@@ -29,18 +35,92 @@ public class ViewPayment {
         // reset all actionlisteners from back button and pay button
     }
 
+    public void checkIncomingTab (Table activeTable){
+        if (activeTable.getActiveTab().getListOfMenuItems().size() == 0 && activeTable.getActiveTab() != null){
+            activeTable.removeTab();
+            nextLayer.drawViewTables();
+        }
+        
+        else {
+            newPayment(activeTable.getActiveTab(), activeTable);
+        }
+    }
+
     public void newPayment(OpenTab activeTab, Table activeTable){
         
         setActiveTab(activeTab);
         setActiveTable(activeTable);
+        
 
         Payment activePayment = new Payment(activeTab, activeTable);
+        resetListeners(activePayment);
 
-        for (BorderButton button : activePayment.getButtonsListOfPaymentOptions()){
+        drawPayment(activePayment);
+
+    }
+
+
+    public void drawPayment(Payment activePayment){
+        mainPanel.drawPaymentOptions(activePayment.getButtonsListOfPaymentOptions(), paymentMethod);
+        bottomPanel.createInformationBodyBottom(activeTable, paymentMethod);
+        sidePanel.createContainerForActiveTab(activeTab, activeTable,"viewpayment");
+        sideBottomPanel.drawTabTotal(activeTab);
+    }
+
+    public void resetListeners(Payment activePayment) {
+        
+        for (BorderButton button : activePayment.getButtonsListOfPaymentOptions()) {
+            for (ActionListener al : button.getActionListeners()){
+                button.removeActionListener(al);
+            }
+
             button.addActionListener(e -> {
                 paymentMethod = button.getText();
+                activePayment.setPaymentMethod(paymentMethod);
+                mainPanel.drawPaymentOptions(activePayment.getButtonsListOfPaymentOptions(), paymentMethod);
+                bottomPanel.createInformationBodyBottom(activeTable, paymentMethod);
+                resetListeners(activePayment);
             });
+
         }
+
+        // reset listeners
+        if (bottomPanel.getPayButton().getActionListeners().length > 0){
+            for (ActionListener al : bottomPanel.getPayButton().getActionListeners()) {
+                bottomPanel.getPayButton().removeActionListener(al);
+            }
+        }
+
+        if (bottomPanel.getBackButton().getActionListeners().length > 0){
+            for (ActionListener al : bottomPanel.getBackButton().getActionListeners()) {
+                bottomPanel.getBackButton().removeActionListener(al);
+            }
+        }
+
+        
+        // add new listeners
+        bottomPanel.getPayButton().addActionListener(e -> {
+
+            if (!paymentMethod.equals("")){
+                // PAYMENT CODE
+                Transaction transaction = new Transaction(activePayment);
+                activeTable.setActiveTab(null);
+                paymentMethod = "";
+
+                nextLayer.drawViewTables();
+            }
+            
+            else {
+                JOptionPane.showMessageDialog(null, "Choose payment method", "Payment message", JOptionPane.PLAIN_MESSAGE);
+            }
+        });
+
+        bottomPanel.getBackButton().addActionListener(e -> {
+            paymentMethod = "";
+
+            previousLayer.drawViewTab();
+        });
+
     }
 
     public OpenTab getActiveTab() {
@@ -80,4 +160,5 @@ public class ViewPayment {
     public void setSidePanel(SidePanel sidePanel) {
         this.sidePanel = sidePanel;
     }
+
 }
