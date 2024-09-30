@@ -1,0 +1,6 @@
+Ricebowl, 39, 0.12,
+Sallad, 78, 0.12,
+Chicken, 93, 0.12,
+Salmon, 123, 0.12,
+Meat, 189, 0.12,
+Schleem, 1000, 0.12,

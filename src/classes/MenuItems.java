@@ -1,44 +1,96 @@
 package classes;
 
-import GUIs.SidePanel;
+import GUIs.buttons.*;
+import GUIs.panels.*;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class MenuItems {
-
     private float price;
     private String name;
     private int productId;
     private int amount;
     private SidePanel parentFrame;
     private String typeOfProduct;
-    private static int productIdNumberSequence = 1001;
-    private ArrayList<MenuItems> listOfEntreeProducts = new ArrayList<MenuItems>();
-    private ArrayList<MenuItems> listOfCourseProducts = new ArrayList<MenuItems>();
-    private ArrayList<MenuItems> listOfDessertProducts = new ArrayList<MenuItems>();
-    private ArrayList<MenuItems> listOfDrinkProducts = new ArrayList<MenuItems>();
+    private float taxGroup;
+    private int productIdNumberSequence = 1000;
 
-    private MenuItems(float price, String name, int amount, String typeOfProduct){
+    private ArrayList<MenuItems> listOfEntreeProducts = new ArrayList<MenuItems>();
+    private ArrayList<BorderButton> buttonListOfEntreeProducts = new ArrayList<>();
+
+    private ArrayList<MenuItems> listOfCourseProducts = new ArrayList<MenuItems>();
+    private ArrayList<BorderButton> buttonListOfCourseProducts = new ArrayList<>();
+
+    private ArrayList<MenuItems> listOfDessertProducts = new ArrayList<MenuItems>();
+    private ArrayList<BorderButton> buttonListOfDessertProducts = new ArrayList<>();
+
+    private ArrayList<MenuItems> listOfDrinkProducts = new ArrayList<MenuItems>();
+    private ArrayList<BorderButton> buttonListOfDrinkProducts = new ArrayList<>();
+
+    private ArrayList<String> listOfHeadlines = new ArrayList<>();
+    private ArrayList<BorderButton> buttonListOfHeadlines = new ArrayList<>();
+
+    private MenuItems(float price, String name, int amount, String typeOfProduct, float taxGroup){
+        productIdNumberSequence++;
         setPrice(price);
         setName(name);
         setAmount(amount);
         setTypeOfProduct(typeOfProduct);
         setProductId(productIdNumberSequence);
-        productIdNumberSequence++;
+        setTaxGroup(taxGroup);
     }
 
     public MenuItems(){
-        createEntreesProducts();
-        createMainCourseProducts();
-        createDessertCourseProducts();
-        createDrinkProducts();
+        createProducts(listOfEntreeProducts, buttonListOfEntreeProducts, "Entrees.txt");
+        createProducts(listOfCourseProducts, buttonListOfCourseProducts, "MainCourse.txt");
+        createProducts(listOfDessertProducts, buttonListOfDessertProducts, "Desserts.txt");
+        createProducts(listOfDrinkProducts, buttonListOfDrinkProducts, "Drinks.txt");
     }
 
-    public MenuItems(String name, float price, int amount, String typeOfProduct, int productId){
+    public MenuItems(String name, float price, int amount, String typeOfProduct, int productId, float taxGroup){
         setName(name);
         setPrice(price);
         setAmount(amount);
         setTypeOfProduct(typeOfProduct);
         setProductId(productId);
+        setTaxGroup(taxGroup);
+    }
+
+    // -------------- METHODS --------------
+    
+    private void createProducts(ArrayList<MenuItems> list, ArrayList<BorderButton> listOfButtons, String fileName){
+
+        String productType = fileName.replace(".txt", "");
+
+        try{
+            File file = new File("src/files/foodMenu/" + fileName);
+            Scanner scanner = new Scanner(file);
+
+            while(scanner.hasNextLine()){
+                String data = scanner.nextLine();
+
+                String[] listOfStrings = data.split(",");
+
+                String name = listOfStrings[0].trim();
+                float price = Float.parseFloat(listOfStrings[1].trim());
+                float taxGroup = Float.parseFloat(listOfStrings[2].trim());
+                list.add(new MenuItems(price, name, 1, productType, taxGroup));
+                listOfButtons.add(new BorderButton(name));
+            }
+
+            scanner.close();
+
+        }
+
+        catch (FileNotFoundException e){
+            System.out.println(fileName + " | File not found!");
+        }
+
+        listOfHeadlines.add(productType);
+        buttonListOfHeadlines.add(new BorderButton(productType));
     }
 
     // -------------- GETTERS --------------
@@ -46,16 +98,20 @@ public class MenuItems {
     public int getAmount() {
         return amount;
     }
+
     public String getName() {
         return name;
     }
+
     public float getPrice() {
         return price;
     }
+
     public int getProductId() {
         return productId;
     }
-    public static int getProductIdNumberSequence() {
+
+    public int getProductIdNumberSequence() {
         return productIdNumberSequence;
     }
 
@@ -65,6 +121,10 @@ public class MenuItems {
 
     public String getTypeOfProduct() {
         return typeOfProduct;
+    }
+
+    public float getTaxGroup() {
+        return taxGroup;
     }
 
     public ArrayList<MenuItems> getListOfCourseProducts(){
@@ -81,6 +141,30 @@ public class MenuItems {
 
     public ArrayList<MenuItems> getListOfDrinksProducts(){
         return listOfDrinkProducts;
+    }
+
+    public ArrayList<String> getListOfHeadlines() {
+        return listOfHeadlines;
+    }
+
+    public ArrayList<BorderButton> getButtonListOfEntreeProducts() {
+        return buttonListOfEntreeProducts;
+    }
+
+    public ArrayList<BorderButton> getButtonListOfCourseProducts() {
+        return buttonListOfCourseProducts;
+    }
+
+    public ArrayList<BorderButton> getButtonListOfDessertProducts() {
+        return buttonListOfDessertProducts;
+    }
+
+    public ArrayList<BorderButton> getButtonListOfDrinkProducts() {
+        return buttonListOfDrinkProducts;
+    }
+
+    public ArrayList<BorderButton> getButtonListOfHeadlines() {
+        return buttonListOfHeadlines;
     }
 
     // -------------- SETTERS --------------
@@ -109,51 +193,10 @@ public class MenuItems {
         this.typeOfProduct = typeOfProduct;
     }
 
-    // -------------- METHODS --------------
-    
-    private void createEntreesProducts(){
-            float[] priceList = {79.00f, 119.00f, 59.00f, 89.00f, 249.00f};
-            String[] nameList = {"Gazpacho", "Sardines & Toast", "Caprese Salad", "Oysters n3","Skagen Toast"};
-    
-            if (priceList.length == nameList.length) {
-                for (int i = 0; i < priceList.length; i++){
-                    listOfEntreeProducts.add(new MenuItems(priceList[i], nameList[i], 1, "Entree"));
-                }
-            }
-
-    }
-    
-    private void createMainCourseProducts(){
-
-        float[] priceList = {39.00f, 78.00f, 93.00f, 123.00f, 189.00f};
-        String[] nameList = {"Ricebowl", "Sallad", "Chicken", "Salmon","Meat"};
-
-        if (priceList.length == nameList.length) {
-            for (int i = 0; i < priceList.length; i++){
-                listOfCourseProducts.add(new MenuItems(priceList[i], nameList[i], 1, "Main"));
-            }
-        }
+    public void setTaxGroup(float taxGroup) {
+        this.taxGroup = taxGroup;
     }
 
-    private void createDessertCourseProducts(){
-        float[] priceList = {69.00f, 78.00f, 59.00f, 250.00f, 999.00f};
-        String[] nameList = {"Ice Cream", "Tiramisu", "Mudcake", "Cheese platter","Goldpainted Chocolate"};
+    // --------------- COPY METHODS ----------------------
 
-        if (priceList.length == nameList.length) {
-            for (int i = 0; i < priceList.length; i++){
-                listOfDessertProducts.add(new MenuItems(priceList[i], nameList[i], 1, "Dessert"));
-            }
-        }
-    }
-
-    private void createDrinkProducts(){
-        float[] priceList = {24.00f, 33.00f, 39.00f, 29.00f, 55.00f};
-        String[] nameList = {"Soda", "Lemonade", "Ice Tea", "Light Soda","Milkshake"};
-
-        if (priceList.length == nameList.length) {
-            for (int i = 0; i < priceList.length; i++){
-                listOfDrinkProducts.add(new MenuItems(priceList[i], nameList[i], 1, "Drink"));
-            }
-        }
-    }
 }
