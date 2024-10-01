@@ -108,3 +108,5 @@ The program is written entirely in java and uses java swing for GUI.
 
 ## 6. Contact
 If you have any questions or want to give me some feedback on this project, please reach out to me on LinkedIn: https://www.linkedin.com/in/carlbroman/
+
+[Back to top](#register-system-for-restaurants#)
