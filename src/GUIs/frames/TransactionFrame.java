@@ -36,7 +36,7 @@ public class TransactionFrame extends JFrame{
         this.setListOfTransactions(Transaction.getSavedTransactions());
         
         // add icon
-        ImageIcon image = new ImageIcon("TableTabLogo.png");
+        ImageIcon image = new ImageIcon("src/images/TableTabLogo.png");
         this.setIconImage(image.getImage());
 
         // create panel for all transactions

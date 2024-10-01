@@ -29,18 +29,23 @@ public class Payment {
         }
     }
 
+    // ---------- GETTERS ---------------
     public OpenTab getActiveTab() {
         return activeTab;
     }
+
     public Table getActiveTable() {
         return activeTable;
     }
+
     public ArrayList<BorderButton> getButtonsListOfPaymentOptions() {
         return buttonsListOfPaymentOptions;
     }
+
     public String[] getPaymentOptions() {
         return paymentOptions;
     }
+
     public int getPaymentId() {
         return paymentId;
     }
@@ -53,18 +58,23 @@ public class Payment {
         return paymentMethod;
     }
 
+    // ---------- SETTERS ---------------
     public void setActiveTab(OpenTab activeTab) {
         this.activeTab = activeTab;
     }
+
     public void setActiveTable(Table activeTable) {
         this.activeTable = activeTable;
     }
+
     public void setButtonsListOfPaymentOptions(ArrayList<BorderButton> buttonsListOfPaymentOptions) {
         this.buttonsListOfPaymentOptions = buttonsListOfPaymentOptions;
     }
+
     public void setPaymentOptions(String[] paymentOptions) {
         this.paymentOptions = paymentOptions;
     }
+
     public void setPaymentId(int paymentId) {
         this.paymentId = paymentId;
     }

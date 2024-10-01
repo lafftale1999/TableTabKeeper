@@ -20,6 +20,7 @@ public class Transaction {
     private static String filepath = "src\\files\\transactions.txt";
 
     private Transaction(String paymentDate, String paymentMethod, float transactionValue, int paymentId){
+        /**Used to construct payments for savedTransactions*/
         setPaymentDate(paymentDate);
         setPaymentMethod(paymentMethod);
         setTransactionValue(transactionValue);
@@ -27,18 +28,32 @@ public class Transaction {
     }
 
     public Transaction(){
+        /**Used to create the list of savedTransactions
+         * reads our saved file transactions.txt
+         */
+
         readSavedTransactions();
-        if (savedTransactions.size() > 0) OpenTab.setTabCounter(savedTransactions.get(savedTransactions.size() - 1).getPaymentId() + 1);
+
+        // if our list size is bigger than 0 - increase the tabcounter to avoid ID duplicates
+        if (savedTransactions.size() > 0) OpenTab.setTabCounter(savedTransactions.get(savedTransactions.size() - 1).getPaymentId());
     }
 
     public Transaction(Payment payment){
+        /**Creates new transaction for savedTransactions
+         * 
+         * @param Payment payment a finished payment
+         */
+
         savedTransactions.add(new Transaction(payment.getTodaysDate(), payment.getPaymentMethod(), payment.getActiveTab().getTabTotal(), payment.getPaymentId()));
         writeSavedTransactions();
-
+        
+        // writes a success message
         JOptionPane.showMessageDialog(null, "Payment has been received", "Payment message", JOptionPane.PLAIN_MESSAGE);
     }
 
+    // ------------------ METHODS ----------------------
     public static void readSavedTransactions(){
+        /**Reads saved transactions from filepath and adds them to savedTransactions */
         
         try {
             File transactionFile = new File(filepath);
@@ -55,19 +70,17 @@ public class Transaction {
                 int id = Integer.parseInt(listStrings[3]);
 
                 savedTransactions.add(new Transaction(date, method, amount, id));
-                
             }
-
             scanner.close();
         }
-        
+
         catch (FileNotFoundException e){
             System.out.println("Theres no file named transactions.txt");
         }
-        
     }
 
     public static void writeSavedTransactions(){
+        /**Writes all savedTransactions in to filepath */
 
         if (savedTransactions.size() > 0) {
             try {
@@ -81,15 +94,11 @@ public class Transaction {
 
             catch (IOException e) {
                 System.out.println("An error occured");
-            }
-            
+            }  
         }
     }
-    
-    public void setActivePayment(Payment activePayment) {
-        this.activePayment = activePayment;
-    }
 
+    // ----------------- GETTERS -----------------
     public Payment getActivePayment() {
         return activePayment;
     }
@@ -98,6 +107,27 @@ public class Transaction {
         return savedTransactions;
     }
 
+    public String getPaymentDate() {
+        return paymentDate;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public float getTransactionValue() {
+        return transactionValue;
+    }
+    
+    public String getFilepath() {
+        return filepath;
+    }
+
+    public int getPaymentId() {
+        return paymentId;
+    }
+
+    // ----------------- SETTERS -----------------
     public void setPaymentDate(String paymentDate) {
         this.paymentDate = paymentDate;
     }
@@ -113,23 +143,8 @@ public class Transaction {
     public void setPaymentId(int paymentId) {
         this.paymentId = paymentId;
     }
-
-    public String getPaymentDate() {
-        return paymentDate;
-    }
-
-    public String getPaymentMethod() {
-        return paymentMethod;
-    }
-    public float getTransactionValue() {
-        return transactionValue;
-    }
     
-    public String getFilepath() {
-        return filepath;
-    }
-
-    public int getPaymentId() {
-        return paymentId;
+    public void setActivePayment(Payment activePayment) {
+        this.activePayment = activePayment;
     }
 }

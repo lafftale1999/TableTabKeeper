@@ -6,7 +6,7 @@ public class MyFrame extends JFrame{
 
     public MyFrame(){
         
-        ImageIcon image = new ImageIcon("TableTabLogo.png");
+        ImageIcon image = new ImageIcon("src/images/TableTabLogo.png");
 
         this.setIconImage(image.getImage());
         

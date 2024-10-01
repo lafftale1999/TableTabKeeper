@@ -55,32 +55,9 @@ public class ViewTables extends JPanel{
         }
     }
 
-    public void addTabButtonListener(){
-        
-        for (ActionListener al : bottomPanel.getTabButton().getActionListeners()) {
-            bottomPanel.getTabButton().removeActionListener(al);
-        }
-        
-        bottomPanel.getTabButton().addActionListener(e -> {
-            // see open tab
-            if (bottomPanel.getCurrentTable().getActiveTab() == null){
-                bottomPanel.getCurrentTable().setActiveTab(new OpenTab(bottomPanel.getCurrentTable(), bottomPanel.getMenuItems()));
-            }
-
-            nextLayer.setActiveTable(bottomPanel.getCurrentTable());
-            nextLayer.setActiveTab(bottomPanel.getCurrentTable().getActiveTab());
-
-            nextLayer.resetListeners();
-            nextLayer.drawViewTab();
-        });
-    }
-
+    // --------------- METHODS -----------------
     public void drawViewTables(){
-        
-        for (Table table : listOfTables){
-            System.out.println(table.getTableId() + " is selected: " + table.isSelected());
-        }
-        
+        /**Draws out the viewTables Layer */
         mainPanel.removeAll();
         sidePanel.removeAll();
         bottomPanel.removeAll();
@@ -97,7 +74,34 @@ public class ViewTables extends JPanel{
         sideBottomPanel.drawTabTotal(listOfTables);
     }
 
+    // --------------- LISTENERS -----------------
+    public void addTabButtonListener(){
+        /**Resets and creates listner for our Create / Open Tab button */
 
+        // reset listeners
+        for (ActionListener al : bottomPanel.getTabButton().getActionListeners()) {
+            bottomPanel.getTabButton().removeActionListener(al);
+        }
+        
+        // add listener
+        bottomPanel.getTabButton().addActionListener(e -> {
+            
+            // if we have no current tab
+            if (bottomPanel.getCurrentTable().getActiveTab() == null){
+                bottomPanel.getCurrentTable().setActiveTab(new OpenTab(bottomPanel.getCurrentTable(), bottomPanel.getMenuItems()));
+            }
+
+            // set up next layer
+            nextLayer.setActiveTable(bottomPanel.getCurrentTable());
+            nextLayer.setActiveTab(bottomPanel.getCurrentTable().getActiveTab());
+
+            // go to ViewTab
+            nextLayer.resetListeners();
+            nextLayer.drawViewTab();
+        });
+    }
+
+    // --------------- SETTERS -----------------
     public void setBottomPanel(BottomPanel bottomPanel) {
         this.bottomPanel = bottomPanel;
     }
@@ -122,6 +126,7 @@ public class ViewTables extends JPanel{
         this.nextLayer = nextLayer;
     }
 
+    // --------------- GETTERS -----------------
     public Table[] getListOfTables() {
         return listOfTables;
     }

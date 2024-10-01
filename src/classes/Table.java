@@ -19,7 +19,6 @@ public class Table extends JRadioButton{
     private MainPanel mainPanel;
 
     // -------------- CONSTRUCTOR --------------
-
     public Table(boolean hasTab, int tableId, MainPanel mainPanel){
 
         setHasTab(hasTab);
@@ -41,15 +40,8 @@ public class Table extends JRadioButton{
     }
 
     // -------------- METHODS --------------
-
-    public void clearTable(MainPanel mainPanel){
-        mainPanel.remove(this);
-
-        mainPanel.setVisible(true);
-        mainPanel.revalidate();
-    }
-
     public void removeTab(){
+        /**Removes the active tab from table (after payment or closing tab) */
         
         if (this.activeTab != null) {
             this.activeTab = null;
