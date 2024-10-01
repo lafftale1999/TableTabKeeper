@@ -60,7 +60,7 @@ By clicking “Transactions” in ViewTables the user is shown all the saved tra
 
 ### 4.2 Updating menu items
 By navigating the file structure to “src/files/foodMenu” the user will find the .txt files with all menu items. Here we can change, delete or add items that will be added into the program during runtime. Important that:
-* The order is as follows: <MenuItem>,<Price>,<TaxGroup>.
+* The order is as follows: (MenuItem),(Price),(TaxGroup).
 * The attributes are separated by commas “,”.
 * <TaxGroup> only supports float numbers 0.12 and 0.25 at the moment (Swedish tax brackets for food, beverages and alcohol).
 
