@@ -1,12 +1,12 @@
 # Register system for restaurants
-1. [Description](#description)
-2. [Functionality](#functionality)
-3. [Installation](#installation)
-4. [Use](#use)
-5. [Technical information](#technical_information)
-6. [Contact](#contact)
+1. [Description](#1-description)
+2. [Functionality](#2-functionality)
+3. [Installation](#3-installation)
+4. [Use](#4-use)
+5. [Technical information](#5-technical_information)
+6. [Contact](#6-contact)
 
-## 1.Description
+## 1. Description
 This project is an overworked version of the requirements for my school assignment. Initially the function that was asked for was only the tab view, but I wanted to try my knowledge and widen it.
 
 The program is a register used for restaurants to facilitate the management of several tables with tabs and payments at once. The user can get a good overview of the tables in the restaurant, active tabs, payment and transactions.
