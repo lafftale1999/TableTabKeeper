@@ -6,12 +6,12 @@ import GUIs.buttons.*;
 import GUIs.panels.*;
 
 import classes.*;
-import java.util.ArrayList;
 import java.awt.event.ActionListener;
 
 
 public class ViewTab extends JPanel{
 
+        // attributes
         private ViewTables previousLayer;
         private ViewPayment nextLayer;
         private OpenTab activeTab;
@@ -19,14 +19,13 @@ public class ViewTab extends JPanel{
         private String clickedButton = "menu";
         private String previousClickedButton = "";
         private int chosenAmount = 1;
-
-        // panels
-        MainPanel mainPanel;
-        SidePanel sidePanel;
-        SideBottomPanel sideBottomPanel;
-        BottomPanel bottomPanel;
-
         private MenuItems menuItems;
+
+        // Panels
+        private MainPanel mainPanel;
+        private SidePanel sidePanel;
+        private SideBottomPanel sideBottomPanel;
+        private BottomPanel bottomPanel;
 
         public ViewTab( MenuItems menuItems, 
                         Table activeTable, 
@@ -43,42 +42,93 @@ public class ViewTab extends JPanel{
             setSidePanel(sidePanel);
             setSideBottomPanel(sideBottomPanel);
             setBottomPanel(bottomPanel);
-
-            addListenersToButtons(menuItems.getButtonListOfEntreeProducts());
-            addListenersToButtons(menuItems.getButtonListOfCourseProducts());
-            addListenersToButtons(menuItems.getButtonListOfDessertProducts());
-            addListenersToButtons(menuItems.getButtonListOfDrinkProducts());
-            addListenersToButtons(menuItems.getButtonListOfHeadlines());
             
+            // adds listeners to all buttons in mainpanel
+            addListenersToProductButtons();
+
+            // and to the back button
             mainPanel.getBackMenuButton().addActionListener(e -> {
                 clickedButton = "menu";
                 previousClickedButton = "";
                 decideMainPanelLayer();
             });
-
         }
         
+        // ----------------- METHODS ------------------
         public void drawViewTab(){
+            /**Draws out the ViewTab */
             
-            // drawmethod för huvudmenyknappar - MAINPANEL
-            // drawmethod för underkategorier - MAINPANEL
+            // using clickedButton and previousClickedButton to decide which layer to show in mainPanel
             decideMainPanelLayer();
             
-            // drawmethod för kvittot i sidePanel
+            // shows our tabtotal on the side
             sidePanel.createContainerForActiveTab(activeTab, activeTable, "viewtab");
 
-            // drawmethod för att lägga till [ PRODUKTNAMN ] [Amount ] [ - ][ + ] [ Add ]
-            // drawmethod för [ Back ] [ Pay ]
-            bottomPanel.createAddProductPanel(activeTable);
+            // create bottom panel
+            bottomPanel.createAddProductPanel(activeTable, "", -1);
 
-            // drawmethod för kvittototal och momsberäkning
+            // create tabtotal for side bottom
             sideBottomPanel.drawTabTotal(activeTab);
 
+            // reset all listeners
             resetListeners();
         }
+        
+        public void decideMainPanelLayer(){
+            /**By using clickedButton and previousClickedButton we decide which layer of the menu
+             * we are navigating in
+             */
 
-        public void addListenersToButtons(ArrayList<BorderButton> list){
-            for (BorderButton button : list) {
+            // if "menu" we are in TOPLAYER
+            if (clickedButton.equalsIgnoreCase("menu")){
+                mainPanel.drawMenuOptions(menuItems.getButtonListOfHeadlines(), "menu");
+                bottomPanel.createAddProductPanel(activeTable, "", -1);
+            }
+
+            // if clickedButton is not "menu", we are in a SUBMENU
+            else if (menuItems.getListOfProducts().containsKey(clickedButton)) {
+                mainPanel.drawMenuOptions(menuItems.getListOfProducts().get(clickedButton).getButtons(), "");
+                bottomPanel.createAddProductPanel(activeTable, "", -1);
+            }
+ 
+            // If none of the above, the user has found the correct item
+            else
+                bottomPanel.createAddProductPanel(activeTable, clickedButton, chosenAmount);      
+        }
+
+        public MenuItems findItem(String name, String menu){
+            /**Looks up item in the HashMap with a failsafe. If the user changes its mind
+             * during choosing item we have the else statement to catch it.
+            */
+
+            // checks previousClicked button for key and then name for value in the list
+            if (menuItems.getListOfProducts().containsKey(menu)) {
+                for (int i = 0; i < menuItems.getListOfProducts().get(menu).getItems().size(); i++){
+                    if (menuItems.getListOfProducts().get(menu).getItems().get(i).getName().equalsIgnoreCase(name))
+                        return menuItems.getListOfProducts().get(menu).getItems().get(i);
+                }
+            }
+
+            // if previousClicked button doesnt match anything
+            else {
+                for (String key : menuItems.getListOfProducts().keySet()){
+                    for (MenuItems item : menuItems.getListOfProducts().get(key).getItems()) {
+                        if (name.equalsIgnoreCase(item.getName())) {
+                            return item;
+                        }
+                    }
+                }
+            }
+            
+            return null;
+        }
+
+        // ----------------- LISTENERS ------------------
+        public void addListenersToProductButtons(){
+            /** Add listeners to our buttons shown in the main panel*/
+
+            // TOPMENU
+            for (BorderButton button : menuItems.getButtonListOfHeadlines()) {
                 button.addActionListener(e -> {
                     chosenAmount = 1;
                     previousClickedButton = clickedButton;
@@ -86,77 +136,18 @@ public class ViewTab extends JPanel{
                     decideMainPanelLayer();
                 });
             }
-        }
 
-        public MenuItems findItem(String name, String menu){
-
-            if (menu.equalsIgnoreCase("entrees")) {
-                for (MenuItems product : menuItems.getListOfEntreeProducts()){
-                    if (name.equalsIgnoreCase(product.getName())){
-                        return product;
-                    }
+            // SUBMENUS
+            for (String headline : menuItems.getListOfProducts().keySet()) {
+                for (BorderButton button : menuItems.getListOfProducts().get(headline).getButtons()) {
+                    button.addActionListener(e -> {
+                        chosenAmount = 1;
+                        previousClickedButton = clickedButton;
+                        clickedButton = button.getText();
+                        decideMainPanelLayer();
+                    });
                 }
             }
-
-            else if(menu.equalsIgnoreCase("maincourse")) {
-                for (MenuItems product : menuItems.getListOfCourseProducts()){
-                    if (name.equalsIgnoreCase(product.getName())){
-                        return product;
-                    }
-                }
-            }
-
-            else if(menu.equalsIgnoreCase("desserts")) {
-                for (MenuItems product : menuItems.getListOfDessertProducts()){
-                    if (name.equalsIgnoreCase(product.getName())){
-                        return product;
-                    }
-                }
-            }
-
-            else if(menu.equalsIgnoreCase("drinks")) {
-                for (MenuItems product : menuItems.getListOfDrinksProducts()){
-                    if (name.equalsIgnoreCase(product.getName())){
-                        return product;
-                    }
-                }
-            }
-            
-            return null;
-
-        }
-
-        // metod för att avgöra vad som ska göras härnäst
-        public void decideMainPanelLayer(){
-
-            if (clickedButton.equalsIgnoreCase("entrees")){
-                mainPanel.drawMenuOptions(menuItems.getButtonListOfEntreeProducts(),"");
-                bottomPanel.createAddProductPanel(activeTable);
-            }
-
-            else if (clickedButton.equalsIgnoreCase("maincourse")){
-                mainPanel.drawMenuOptions(menuItems.getButtonListOfCourseProducts(), "");
-                bottomPanel.createAddProductPanel(activeTable);
-            }
-
-            else if (clickedButton.equalsIgnoreCase("desserts")){
-                mainPanel.drawMenuOptions(menuItems.getButtonListOfDessertProducts(), "");
-                bottomPanel.createAddProductPanel(activeTable);
-            }
-            else if (clickedButton.equalsIgnoreCase("drinks")){
-                mainPanel.drawMenuOptions(menuItems.getButtonListOfDrinkProducts(), "");
-                bottomPanel.createAddProductPanel(activeTable);
-            }
-
-            else if (clickedButton.equalsIgnoreCase("menu")){
-                mainPanel.drawMenuOptions(menuItems.getButtonListOfHeadlines(), "menu");
-                bottomPanel.createAddProductPanel(activeTable);
-            }
-                
-                
-            // If the user have clicked an item that they want to add
-            else
-                bottomPanel.createAddProductPanel(activeTable, clickedButton, chosenAmount);      
         }
 
         public void resetListeners() {
@@ -193,6 +184,7 @@ public class ViewTab extends JPanel{
             }
 
             // add new listeners
+            // ++
             bottomPanel.getIncreaseButton().addActionListener(e -> {
                 if (clickedButton.length() > 0 && previousClickedButton.length() > 0) {
                     chosenAmount++;
@@ -200,6 +192,7 @@ public class ViewTab extends JPanel{
                 }
             });
 
+            // --
             bottomPanel.getDecreaseButton().addActionListener(e -> {
                 if (clickedButton.length() > 0 && previousClickedButton.length() > 0 && chosenAmount > 1) {
                     chosenAmount--;
@@ -207,18 +200,21 @@ public class ViewTab extends JPanel{
                 }
             });
 
+            // ADD
             bottomPanel.getAddButton().addActionListener(e -> {
+
                 activeTab.addMenuItem(findItem(clickedButton, previousClickedButton), chosenAmount);
                 clickedButton = "menu";
                 previousClickedButton = "";
                 chosenAmount = 1;
 
                 decideMainPanelLayer();
-                bottomPanel.createAddProductPanel(activeTable);
+                bottomPanel.createAddProductPanel(activeTable,"",-1);
                 sidePanel.createContainerForActiveTab(activeTab, activeTable,"viewtab");
                 sideBottomPanel.drawTabTotal(activeTab);
             });
 
+            // PAY / CLOSE
             bottomPanel.getPayButton().addActionListener(e -> {
 
                 clickedButton = "menu";
@@ -229,6 +225,7 @@ public class ViewTab extends JPanel{
 
             });
 
+            // GO BACK
             bottomPanel.getBackButton().addActionListener(e -> {
                 clickedButton = "menu";
                 previousClickedButton = "";
@@ -236,9 +233,9 @@ public class ViewTab extends JPanel{
 
                 previousLayer.drawViewTables();
             });
-
         }
-           
+        
+        // ----------------- SETTERS ------------------
         public void setActiveTab(OpenTab activeTab) {
             this.activeTab = activeTab;
         }
@@ -275,6 +272,7 @@ public class ViewTab extends JPanel{
             this.nextLayer = nextLayer;
         }
 
+        // ----------------- GETTERS ------------------
         public MainPanel getMainPanel() {
             return mainPanel;
         }
@@ -294,6 +292,7 @@ public class ViewTab extends JPanel{
         public OpenTab getActiveTab() {
             return activeTab;
         }
+        
         public Table getActiveTable() {
             return activeTable;
         }
@@ -301,5 +300,4 @@ public class ViewTab extends JPanel{
         public ViewPayment getNextLayer() {
             return nextLayer;
         }
-
 }

@@ -18,25 +18,47 @@ public class OpenTab {
         table.setHasTab(true);
     }
 
+    // ---------- METHODS ---------------
     public void updateTabTotal(float amount){
+        /**Updates tabtotal
+         * 
+         * @param float amount
+         */
+
         this.tabTotal += amount;
     }
 
     public void addMenuItem(MenuItems product, int amount){
+        /**Adds menuItem to our listOfMenuItems
+         * 
+         * @param MenuItems product decides which product
+         * @param int amount decides how many
+         */
+        
         MenuItems newMenuItem = new MenuItems(product.getName(), product.getPrice(), amount, product.getTypeOfProduct(), product.getProductId(), product.getTaxGroup());
         listOfMenuItems.add(newMenuItem);
         updateTabTotal(newMenuItem.getAmount() * newMenuItem.getPrice());
     }
 
     public void removeMenuItem(MenuItems itemToRemove){
+        /**Remove item from listOfMenuItems
+         * 
+         * @param MenuItems itemToRemove
+         */
 
+        // for loop with index
         for (int i = 0; i < listOfMenuItems.size(); i++){
+            
+            // check if the objects matches
             if (itemToRemove.equals(listOfMenuItems.get(i))){
+                
+                // checks if they should only remove 1 amount
                 if (listOfMenuItems.get(i).getAmount() > 1) {
                     tabTotal -= listOfMenuItems.get(i).getPrice();
                     listOfMenuItems.get(i).setAmount(listOfMenuItems.get(i).getAmount() - 1);
                 }
 
+                // or remove the whole product
                 else {
                     tabTotal -= listOfMenuItems.get(i).getPrice();
                     listOfMenuItems.remove(i);
@@ -47,15 +69,24 @@ public class OpenTab {
     }
 
     public float[] calculateTaxes(){
+        /**Calculate the taxes of each item in the active tab
+         * 
+         * return float[] list of taxamount [0] = 12% | [1] = 25%
+         */
 
+        // create temporary list
         float[] listOfTaxes = new float[2];
-    
+        
+        // loop through each item
         for (MenuItems product : this.listOfMenuItems){
+            
+            // 25%
             if (product.getTaxGroup() == 0.25f){
                 listOfTaxes[1] += (product.getPrice() * product.getAmount()) * 0.25f;
                 System.out.println(listOfTaxes[1]);
             }
-        
+            
+            // 12%
             else {
                 listOfTaxes[0] += (product.getPrice() * product.getAmount()) * 0.12f;
                 System.out.println(listOfTaxes[0]);
@@ -65,12 +96,11 @@ public class OpenTab {
         return listOfTaxes;
     }
 
+    // ---------- GETTERS ---------------
     public ArrayList<MenuItems> getListOfMenuItems() {
         return listOfMenuItems;
     }
 
-
-    // ----------GETTERS---------------
      public int getTabId() {
         return tabId;
     }
@@ -87,7 +117,7 @@ public class OpenTab {
         return tabCounter;
     }
 
-    // ----------SETTERS---------------
+    // ---------- SETTERS ---------------
     public void setListOfMenuItems(ArrayList<MenuItems> listOfMenuItems) {
         this.listOfMenuItems = listOfMenuItems;
     }

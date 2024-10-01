@@ -3,7 +3,6 @@ package GUIs.frames;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.text.NumberFormat;
@@ -27,6 +26,8 @@ public class TransactionFrame extends JFrame{
     private int panelHeight = 20;
 
     public TransactionFrame(){
+        
+        // set frame
         this.setSize(500,500);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -34,13 +35,15 @@ public class TransactionFrame extends JFrame{
         this.setTitle("Transactions");
         this.setListOfTransactions(Transaction.getSavedTransactions());
         
-        ImageIcon image = new ImageIcon("TableTabLogo.png");
-
+        // add icon
+        ImageIcon image = new ImageIcon("src/images/TableTabLogo.png");
         this.setIconImage(image.getImage());
 
+        // create panel for all transactions
         mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
+        // make panel scrollable
         JScrollPane scrollPane = new JScrollPane(mainPanel);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setViewportView(mainPanel);
@@ -49,98 +52,141 @@ public class TransactionFrame extends JFrame{
         this.add(scrollPane, BorderLayout.CENTER);
 
         createTranscationPanels();
-        System.out.println("FRAME HAS BEEN CREATED");
     }
 
-    public void createTranscationPanels(){
+    // ------------------- METHODS -----------------------
+    private ArrayList<JLabel> createTitles(String[] headlines){
+        /**Creates title labels
+         * 
+         * @param String[] headlines is used to loop through all headlines and set them as text
+         * return ArrayList<JLabel>;
+        */
 
-        if (listOfPanels.size() > 0) {
+        ArrayList<JLabel> labels = new ArrayList<>();
 
-            listOfPanels.clear();
+        Font font = new Font(null, Font.BOLD, 14);
 
+        for (String headline : headlines) {
+            JLabel label = new JLabel();
+            label.setText(headline);
+            label.setFont(font);
+        }
+        
+        return labels;
+    }
+
+    private ArrayList<JLabel> createTransactionLabels(String[]listOfInformation){
+        /**Creates a list of labels by looping through the array
+         * 
+         * @param String[] listOfInformation used to loop through list of transaction information as id, date, method, value
+         * return ArrayList<JLabel>;
+         */
+
+        ArrayList<JLabel> list = new ArrayList<>();
+
+        for (String information : listOfInformation) {
+            JLabel label = new JLabel();
+            label.setText(information);
+            list.add(label);
         }
 
+        return list;
+    }
+
+    private JPanel createPanel(){
+        JPanel panel = new JPanel();
+        panel.setPreferredSize(new Dimension(450, panelHeight));
+        panel.setLayout(new GridLayout(1, 4));
+        panel.setMaximumSize(new Dimension(450, panelHeight));
+        panel.setAlignmentY(Component.TOP_ALIGNMENT);
+
+        return panel;
+    }
+    
+    // ------------------- VIEWTRANSACTIONS -----------------------
+    public void createTranscationPanels(){
+        /**Creates the panel for showing transactions
+         * 
+         */
+
+        // clear list
+        if (listOfPanels.size() > 0) {
+            listOfPanels.clear();
+        }
+
+        // checks if we have any saved transactions
         if (listOfTransactions.size() > 0) {
-            JPanel titlePanel = new JPanel();
-            titlePanel.setPreferredSize(new Dimension(450, panelHeight));
-            titlePanel.setLayout(new GridLayout(1, 4));
-            titlePanel.setMaximumSize(new Dimension(450, panelHeight));
-            titlePanel.setAlignmentY(Component.TOP_ALIGNMENT);
-
-            JLabel idTitle = new JLabel();
-            idTitle.setText("ID");
-            idTitle.setFont(new Font(null, Font.BOLD, 14));
-            titlePanel.add(idTitle);
             
-            JLabel dateTitle = new JLabel();
-            dateTitle.setText("DATE");
-            dateTitle.setFont(new Font(null, Font.BOLD, 14));
-            titlePanel.add(dateTitle);
+            // String array with headlines
+            String[] headlines = {"ID", "DATE", "PAYMENT", "VALUE"};
 
-            JLabel paymentMethodTitle = new JLabel();
-            paymentMethodTitle.setText("PAYMENT");
-            paymentMethodTitle.setFont(new Font(null, Font.BOLD, 14));
-            titlePanel.add(paymentMethodTitle);
+            // creates panel
+            JPanel titlePanel = createPanel();
 
-            JLabel valueTitle = new JLabel();
-            valueTitle.setText("VALUE");
-            valueTitle.setFont(new Font(null, Font.BOLD, 14));
-            titlePanel.add(valueTitle);
+            // creates a list of lables
+            ArrayList<JLabel> titleLables = createTitles(headlines);
 
+            // adds labels to title panel
+            for (JLabel label : titleLables) {
+                titlePanel.add(label);
+            }
+            
+            // adds titlepanel to list
             listOfPanels.add(titlePanel);
-            System.out.println("TITLE HAS BEEN CREATED");
 
-        
+            // loops through every transaction
             for(Transaction transaction : listOfTransactions) {
                 
-                JPanel newPanel = new JPanel();
-                newPanel.setPreferredSize(new Dimension(450, panelHeight));
-                newPanel.setLayout(new GridLayout(1, 4));
-                newPanel.setMaximumSize(new Dimension(450, panelHeight));
-                newPanel.setAlignmentY(Component.TOP_ALIGNMENT);
+                // creates specific
+                JPanel newPanel = createPanel();
                 
+                // creates a string array with payment id, date, method and value
+                String[] transactionInformation = {
+                    Integer.toString(transaction.getPaymentId()), // ID
+                    transaction.getPaymentDate(),                 // DATE
+                    transaction.getPaymentMethod(),               // METHOD
+                    NumberFormat.getCurrencyInstance().format(transaction.getTransactionValue())    // VALUE
+                };
 
-                JLabel idText = new JLabel();
-                idText.setText(Integer.toString(transaction.getPaymentId()));
-                newPanel.add(idText);
+                // creates list of labels
+                ArrayList<JLabel> transactionLables = createTransactionLabels(transactionInformation);
 
-                JLabel dateText = new JLabel();
-                dateText.setText(transaction.getPaymentDate());
-                newPanel.add(dateText);
+                // adds labels to newPanel
+                for (JLabel label : transactionLables) {
+                    newPanel.add(label);
+                }
 
-                JLabel paymentMethodText = new JLabel();
-                paymentMethodText.setText(transaction.getPaymentMethod());
-                newPanel.add(paymentMethodText);
-
-                JLabel valueText = new JLabel();
-                valueText.setText(NumberFormat.getCurrencyInstance().format(transaction.getTransactionValue()));
-                newPanel.add(valueText);
-
-                System.out.println("TRANSACTION INFORMATION LINES CREATED");
+                // adds newPanel to list
                 listOfPanels.add(newPanel);
             }
         }
 
+        // if no transactions
         else {
+            // create panel
             JPanel newPanel = new JPanel();
-                newPanel.setPreferredSize(new Dimension(450, panelHeight));
-                newPanel.setLayout(new GridLayout(1, 4));
-                
+            newPanel.setPreferredSize(new Dimension(450, panelHeight));
+            newPanel.setLayout(new GridLayout(1, 1));
+            
+            // create message and add to panel
+            JLabel errorMessage = new JLabel();
+            errorMessage.setText("No transactions registered!");
+            errorMessage.setHorizontalAlignment(JLabel.CENTER);
+            newPanel.add(errorMessage);
 
-                JLabel errorMessage = new JLabel();
-                errorMessage.setText("No transactions registered!");
-                errorMessage.setHorizontalAlignment(JLabel.CENTER);
-                newPanel.add(errorMessage);
-
-                listOfPanels.add(newPanel);
+            // add panel to list
+            listOfPanels.add(newPanel);
         }
         
-
+        // draw
         drawTransactions();
     }
 
+    // ------------------- DRAW -----------------------
     public void drawTransactions(){
-
+        /**
+         * Draws out transactions
+         */
 
         mainPanel.removeAll();
 
